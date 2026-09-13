@@ -28,8 +28,10 @@ bool ProgressItem::calculateXPosVar( size_t &result_var, const int &x_pos, const
 	comp = mod;
 	if( is_ceil ) {
 		width = comp;
-		if( CalculateTools::equ( mod, width ) == false )
-			comp += 1;
+		bool result;
+		if( CalculateTools::equ( result, mod, width ) )
+			if( result == false )
+				comp += 1;
 	}
 	mod = comp;
 	mod = mod / 100;
@@ -47,8 +49,10 @@ bool ProgressItem::calculateVarXPos( int &result_x_pos, const size_t &var, const
 	if( is_ceil ) {
 		offsetX = cmp;
 		double o = offsetX;
-		if( CalculateTools::equ( o, cmp ) == false )
-			result_x_pos += 1;
+		bool result;
+		if( CalculateTools::equ( result, o, cmp ) )
+			if( result == false )
+				result_x_pos += 1;
 	}
 	return true;
 }
