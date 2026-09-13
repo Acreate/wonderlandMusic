@@ -6,16 +6,15 @@
 
 class PlayerSelectOption : public QWidget, public IPlayerSelectOption {
 	Q_OBJECT;
-
+protected:
+	IPlayerControlWidget* playerControlWidget = nullptr;
+	UserMutex* userMutex = nullptr;
 protected:
 	bool deleteResource( );
 
 public:
-	PlayerSelectOption( ) {
-	}
-	~PlayerSelectOption( ) override {
-		deleteResource( );
-	}
+	PlayerSelectOption( );
+	~PlayerSelectOption( ) override;
 	bool initBefore( ) override;
 	bool init( ) override;
 	bool initAfter( ) override;
@@ -28,7 +27,7 @@ protected:
 	void mouseMoveEvent( QMouseEvent *event ) override;
 	void mousePressEvent( QMouseEvent *event ) override;
 	void mouseReleaseEvent( QMouseEvent *event ) override;
-
+	void resizeEvent(QResizeEvent *event) override;
 public:
 	IPlayerControlWidget * getPlayerControlWidget( ) const override;
 	bool nextTrack( ) override;
