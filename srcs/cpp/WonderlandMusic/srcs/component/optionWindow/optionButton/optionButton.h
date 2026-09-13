@@ -1,6 +1,7 @@
 ﻿#ifndef OPTIONBUTTON_H_H_HEAD__FILE__
 #define OPTIONBUTTON_H_H_HEAD__FILE__
-#include <QLabel>
+
+#include <QWidget>
 
 #include "../../../classTypeInfo/classTypeInfoVar.h"
 class OptionPanel;

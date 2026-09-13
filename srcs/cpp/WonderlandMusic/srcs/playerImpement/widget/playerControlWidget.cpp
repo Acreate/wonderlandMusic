@@ -1,15 +1,11 @@
 ﻿#include "playerControlWidget.h"
 
+#include <QFileInfo>
 #include <QMouseEvent>
 
 #include <component/playWindow/interface/widget/iPlayerWindowCentreWidget.h>
 
-#include "../../component/playWindow/interface/playerComponent/iPlayerSortOption.h"
-#include "../../component/playWindow/interface/playerComponent/iPlayerbackProgressBar.h"
-#include "../../component/playWindow/interface/playerComponent/iPlayerSelectOption.h"
-
 #include "../../head/release_macro.h"
-#include "../../head/result_message_out.h"
 
 #include "../../mutex/userMutex.h"
 
@@ -62,60 +58,10 @@ bool PlayerControlWidget::terminate( ) {
 bool PlayerControlWidget::setPlayerTime( const int64_t &player_mill_second_time ) {
 	return false;
 }
-IPlayerSortOption * PlayerControlWidget::getPlayerSortOption( ) const {
-	return playerSortOption;
-}
-IPlayerSelectOption * PlayerControlWidget::getPlayerSelectOption( ) const {
-	return playerSelectOption;
-}
-IPlayerbackProgressBar * PlayerControlWidget::getPlayerbackProgressBar( ) const {
-	return playerbackProgressBar;
-}
-bool PlayerControlWidget::setPlayerSortOption( IPlayerSortOption *player_sort_option ) {
-	if( player_sort_option ) {
-		if( IPlayerControlWidget::setPlayerSortOption( player_sort_option, this ) == false )
-			return Result_Var_Function_Messag_Ptr_Out_Args( false, player_sort_option, setPlayerSortOption, tr( "父类设置控住组件异常" ) );
-	}
-	auto old = playerSortOption;
-	playerSortOption = player_sort_option;
-	if( old )
-		if( IPlayerControlWidget::setPlayerSortOption( old, nullptr ) == false )
-			return Result_Var_Function_Messag_Ptr_Out_Args( false, old, setPlayerSortOption, tr( "父类设置控制组件异常-nullptr" ) );
-	return true;
-}
-bool PlayerControlWidget::setPlayerSelectOption( IPlayerSelectOption *player_select_option ) {
-	if( player_select_option ) {
-		if( IPlayerControlWidget::setPlayerSelectOption( player_select_option, this ) == false )
-			return Result_Var_Function_Messag_Ptr_Out_Args( false, player_select_option, setPlayerSelectOption, tr( "父类设置控住组件异常" ) );
-	}
-	auto old = playerSelectOption;
-	playerSelectOption = player_select_option;
-	if( old )
-		if( IPlayerControlWidget::setPlayerSelectOption( old, nullptr ) == false )
-			return Result_Var_Function_Messag_Ptr_Out_Args( false, old, setPlayerSelectOption, tr( "父类设置控制组件异常-nullptr" ) );
-	return true;
-}
-bool PlayerControlWidget::setPlayerbackProgressBar( IPlayerbackProgressBar *playerback_progress_bar ) {
-	if( playerback_progress_bar ) {
-		if( IPlayerControlWidget::setPlayerbackProgressBar( playerback_progress_bar, this ) == false )
-			return Result_Var_Function_Messag_Ptr_Out_Args( false, playerback_progress_bar, setPlayerbackProgressBar, tr( "父类设置控住组件异常" ) );
-	}
-	auto old = playerbackProgressBar;
-	userMutex->lock( );
-	playerbackProgressBar = playerback_progress_bar;
-	userMutex->unlock( );
-	if( old )
-		if( IPlayerControlWidget::setPlayerbackProgressBar( old, nullptr ) == false )
-			return Result_Var_Function_Messag_Ptr_Out_Args( false, old, setPlayerbackProgressBar, tr( "父类设置控制组件异常-nullptr" ) );
-	return true;
-}
 bool PlayerControlWidget::deleteResource( ) {
 	if( userMutex == nullptr )
 		return true;
 	setPlayerWindowCentre( nullptr );
-	setPlayerbackProgressBar( nullptr );
-	setPlayerSortOption( nullptr );
-	setPlayerSelectOption( nullptr );
 	Delete_Resource_App_Core_Ptr( userMutex );
 	return true;
 }
