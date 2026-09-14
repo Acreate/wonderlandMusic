@@ -7,8 +7,13 @@
 
 #include "../../../../head/result_message_out.h"
 
-ProgressItem::ProgressItem( ) {
-	maxVar = 100;
+ProgressItem::ProgressItem( ) : ProgressItem( 0, CalculateTools::max< size_t >( ) ) {
+}
+ProgressItem::ProgressItem( const size_t &current_var ) : ProgressItem( current_var, CalculateTools::max< size_t >( ) ) {
+}
+ProgressItem::ProgressItem( const size_t &current_var, const size_t &max_var ) : maxVar( max_var ) {
+	if( setCurrentVar( current_var ) == false )
+		currenVar = 0;
 }
 ProgressItem::~ProgressItem( ) {
 }

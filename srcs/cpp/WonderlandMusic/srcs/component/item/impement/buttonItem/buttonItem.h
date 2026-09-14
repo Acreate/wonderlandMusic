@@ -19,7 +19,11 @@ protected:
 public:
 	ButtonItem( );
 	~ButtonItem( ) override;
+	explicit ButtonItem( ButtonItem::Type type );
+	explicit ButtonItem( const QString &txt );
+	explicit ButtonItem( const QImage &ico );
 	virtual ButtonItem::Type getType( ) const;
+	virtual bool setType( const ButtonItem::Type &new_type );
 	virtual const QString & getTxt( ) const;
 	virtual const QImage & getIco( ) const;
 	bool clear( ) override;

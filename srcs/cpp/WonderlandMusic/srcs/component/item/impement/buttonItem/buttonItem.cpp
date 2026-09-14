@@ -48,8 +48,29 @@ ButtonItem::~ButtonItem( ) {
 	delete txt;
 	delete ico;
 }
+ButtonItem::ButtonItem( ButtonItem::Type type ) : ButtonItem( ) {
+	this->type = type;
+}
+ButtonItem::ButtonItem(const QString &txt ) : ButtonItem( ) {
+	type = Type::Txt;
+	setTxt( txt );
+}
+ButtonItem::ButtonItem(const QImage &ico ) : ButtonItem( ) {
+	type = Type::Ico;
+	setIco( ico );
+}
 ButtonItem::Type ButtonItem::getType( ) const {
 	return type;
+}
+bool ButtonItem::setType( const ButtonItem::Type &new_type ) {
+	if( new_type == type )
+		return true;
+	auto old = type;
+	type = new_type;
+	if( updateDrawBuff( ) )
+		return true;
+	type = old;
+	return false;
 }
 const QString & ButtonItem::getTxt( ) const {
 	return *txt;

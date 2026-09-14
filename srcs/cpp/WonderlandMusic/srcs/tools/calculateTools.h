@@ -4,6 +4,10 @@
 
 namespace CalculateTools {
 	template< typename Var_Type >
+	Var_Type max( ) {
+		return std::numeric_limits< Var_Type >::max( );
+	}
+	template< typename Var_Type >
 	bool mod( Var_Type &result_var, const Var_Type &left, const Var_Type &right ) {
 		if( left < 0 && right < 0 ) {
 			result_var = std::abs( left );

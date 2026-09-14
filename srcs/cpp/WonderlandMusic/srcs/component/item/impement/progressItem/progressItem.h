@@ -11,6 +11,8 @@ protected:
 
 public:
 	ProgressItem( );
+	ProgressItem( const size_t &current_var );
+	ProgressItem( const size_t &current_var, const size_t &max_var );
 	~ProgressItem( ) override;
 	virtual void setMaxValue( const size_t &max_var );
 	virtual size_t getMaxValue( ) const;

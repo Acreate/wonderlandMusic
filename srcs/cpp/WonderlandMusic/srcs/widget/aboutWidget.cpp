@@ -38,16 +38,17 @@ bool AboutWidget::init( ) {
 	if( AppJsonKeyTools::getAboutWidget( [&qImage] ( const AboutWidgetJsonKey &json_key ) {
 		auto logoIconPath = json_key.getQtLogoIconPath( );
 		QFileInfo fileInfo( logoIconPath );
-		auto fileName = ":/qt-project.org/qmessagebox/images/qtlogo-64.png";
 		bool exists = fileInfo.exists( );
 		if( exists == false ) {
 			Message_Error_Out << tr( "Qt 标识图像不存在" ) + " : " + logoIconPath;
+			auto fileName = ":/qt-project.org/qmessagebox/images/qtlogo-64.png";
 			exists = qImage.load( fileName );
 			if( exists == false )
 				return false;
 		}
 		if( qImage.load( logoIconPath ) == false ) {
 			Message_Error_Out << tr( "Qt 标识图像加载失败，重新使用 .rc 资源" ) + " : " + logoIconPath;
+			auto fileName = ":/qt-project.org/qmessagebox/images/qtlogo-64.png";
 			exists = qImage.load( fileName );
 			if( exists == false )
 				return false;
@@ -80,7 +81,7 @@ bool AboutWidget::init( ) {
 }
 
 AboutWidget::~AboutWidget( ) {
- deleteResource(  );
+	deleteResource( );
 }
 
 bool AboutWidget::deleteResource( ) {
@@ -94,7 +95,7 @@ QWidget * AboutWidget::toWidget( ) {
 }
 
 bool AboutWidget::initBefore( ) {
- deleteResource(  );
+	deleteResource( );
 	mainLayout = new QHBoxLayout( this );
 
 	qtIco = new QLabel( this );

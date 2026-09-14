@@ -2,23 +2,7 @@
 
 #include "head/result_message_out.h"
 
-class T1 {
-public:
-	T1( ) {
-		classTypeTools::regTypeInfoRef( this );
-	}
-	virtual ~T1( ) {
-	}
-};
-
-class T2 : public T1 {
-public:
-	T2( ) {
-		classTypeTools::regTypeInfoRef( this );
-	}
-	~T2( ) override {
-	}
-};
+#include "tools/calculateTools.h"
 
 int main( int argc, char *argv[ ], char *envp[ ] ) {
 	int runMainCode = -1;

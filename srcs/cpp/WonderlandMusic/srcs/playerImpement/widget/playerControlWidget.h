@@ -6,19 +6,23 @@
 
 #include "../../interface/iAppResourceCore.h"
 
-class DrawItem;
+class StringItem;
+class ProgressItem;
+class ButtonItem;
 
 class PlayerControlWidget : public QWidget, public IPlayerControlWidget, public IAppResourceCore {
 	Q_OBJECT;
 
 private:
-	DrawItem *thePreviousSong = nullptr;
-	DrawItem *theNextSong = nullptr;
-	DrawItem *theNextStep = nullptr;
-	DrawItem *theLastStep = nullptr;
-	DrawItem *play = nullptr;
-	DrawItem *pause = nullptr;
-	DrawItem *termination = nullptr;
+	ButtonItem *thePreviousSong = nullptr;
+	ButtonItem *theNextSong = nullptr;
+	ButtonItem *theNextStep = nullptr;
+	ButtonItem *theLastStep = nullptr;
+	ButtonItem *play = nullptr;
+	ButtonItem *pause = nullptr;
+	ButtonItem *termination = nullptr;
+	ProgressItem *playerProgressItem = nullptr;
+	StringItem *playerTimeItem = nullptr;
 	UserMutex *userMutex = nullptr;
 	IPlayerWindowCentreWidget *playerWindowCentreWidget = nullptr;
 
