@@ -16,8 +16,8 @@ class PlayerControlWidget : public QWidget, public IPlayerControlWidget, public 
 private:
 	ButtonItem *thePreviousSong = nullptr;
 	ButtonItem *theNextSong = nullptr;
+	ButtonItem *thePreviousStep = nullptr;
 	ButtonItem *theNextStep = nullptr;
-	ButtonItem *theLastStep = nullptr;
 	ButtonItem *play = nullptr;
 	ButtonItem *pause = nullptr;
 	ButtonItem *termination = nullptr;

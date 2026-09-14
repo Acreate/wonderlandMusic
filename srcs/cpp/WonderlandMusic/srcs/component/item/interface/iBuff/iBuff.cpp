@@ -57,3 +57,21 @@ bool IBuff::clear( ) {
 	*drawImageBuff = QImage( );
 	return true;
 }
+bool IBuff::zoomTo( const int &width, const int &height ) {
+	if( IBuff::isNull( ) )
+		return false;
+	*drawImageBuff = drawImageBuff->scaled( width, height );
+	return true;
+}
+bool IBuff::zoomToWidth( const int &width ) {
+	if( IBuff::isNull( ) )
+		return false;
+	*drawImageBuff = drawImageBuff->scaledToWidth( width );
+	return true;
+}
+bool IBuff::zoomToHeight( const int &height ) {
+	if( IBuff::isNull( ) )
+		return false;
+	*drawImageBuff = drawImageBuff->scaledToHeight( height );
+	return true;
+}

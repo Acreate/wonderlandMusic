@@ -25,6 +25,9 @@ public:
 
 	virtual bool drawToParintr( QPainter &painter ) = 0;
 	virtual bool clear( );
+	virtual bool zoomTo( const int &width, const int &height );
+	virtual bool zoomToWidth( const int &width );
+	virtual bool zoomToHeight( const int &height );
 };
 
 #endif // IBUFF_H_H_HEAD__FILE__

@@ -5,6 +5,8 @@
 #include "../application/appInstance/appDataManage/translate/messageTranslate.h"
 #include "../application/appInstance/appDataManage/translate/userMutexTranslate.h"
 
+#include "../head/result_message_out.h"
+
 #include "../msgInfo/messageErrorOut.h"
 #include "../msgInfo/messageString.h"
 
