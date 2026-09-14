@@ -1,17 +1,18 @@
 ﻿#ifndef STRINGITEM_H_H_HEAD__FILE__
 #define STRINGITEM_H_H_HEAD__FILE__
-#include "../../interface/iBuff/iBuff.h"
-#include "../../interface/iCoord/iCoord.h"
+#include "../../interface/iItemDraw/iItemDraw.h"
 
-class StringItem : public ICoord, public IBuff {
+class StringItem : public IItemDraw {
 	QString *string;
 
 public:
 	StringItem( );
 	~StringItem( ) override;
-	virtual void setString( const QString &new_string );
+	virtual bool setString( const QString &new_string );
 	virtual const QString & getString( ) const;
-	bool drawToParintr( QPainter &painter ) override;
+	bool loadFileToDraw( const QString &load_image_file_path ) override;
+	bool loadStringToDraw( const QString &set_string_draw_to_buff ) override;
+	bool setDraw( const QImage &draw ) override;
 };
 
 #endif // STRINGITEM_H_H_HEAD__FILE__

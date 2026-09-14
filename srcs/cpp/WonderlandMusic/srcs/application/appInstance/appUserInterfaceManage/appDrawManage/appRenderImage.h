@@ -46,6 +46,7 @@ public:
 
 	virtual const QFontMetrics * getFontMetrics( ) const;
 
+	virtual bool appendImage( QImage &result_render_image, const QImage &left, const QImage &right ) const;
 	virtual bool renderTxt( QImage &result_render_image, const QString &render_txt ) const;
 	virtual bool renderTxt( QImage &result_render_image, const QString &render_txt, const QFont &font ) const;
 

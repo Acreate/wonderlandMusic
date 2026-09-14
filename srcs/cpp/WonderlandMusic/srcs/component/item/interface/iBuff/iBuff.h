@@ -8,18 +8,23 @@ class QImage;
 
 class IBuff : public virtual ClassTypeInfoVar {
 private:
-	QImage *draw;
+	QImage *drawImageBuff;
+
+protected:
+	virtual QImage * getDrawImageBuffPtr( ) const;
 
 public:
 	IBuff( );
 	~IBuff( ) override;
-	virtual const QImage & getDraw( ) const;
+	virtual QImage getDrawImageBuff( ) const;
 	virtual bool setDraw( const QImage &draw );
 	virtual bool isNull( ) const;
 
 	virtual bool loadFileToDraw( const QString &load_image_file_path );
+	virtual bool loadStringToDraw( const QString &set_string_draw_to_buff );
 
 	virtual bool drawToParintr( QPainter &painter ) = 0;
+	virtual bool clear( );
 };
 
 #endif // IBUFF_H_H_HEAD__FILE__

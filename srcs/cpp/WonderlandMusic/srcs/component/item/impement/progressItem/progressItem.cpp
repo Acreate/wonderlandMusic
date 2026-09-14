@@ -1,8 +1,11 @@
 ﻿#include "progressItem.h"
 
+#include <QPainter>
 #include <QRect>
 
 #include <tools/calculateTools.h>
+
+#include "../../../../head/result_message_out.h"
 
 ProgressItem::ProgressItem( ) {
 	maxVar = 100;
@@ -57,6 +60,32 @@ bool ProgressItem::calculateVarXPos( int &result_x_pos, const size_t &var, const
 	}
 	return true;
 }
-bool ProgressItem::drawToParintr( QPainter &painter ) {
-	return false;
+size_t ProgressItem::getCurrentVar( ) const {
+	return currenVar;
+}
+bool ProgressItem::setCurrentVar( const size_t &new_var ) {
+	if( IItemDraw::isNull( ) )
+		return false;
+	if( new_var > maxVar )
+		return false;
+	int drawEndX;
+	if( calculateVarXPos( drawEndX, new_var ) == false )
+		return false;
+	currenVar = new_var;
+	auto drawImageBuff = IItemDraw::getDrawImageBuffPtr( );
+	QPainter painter;
+	painter.begin( drawImageBuff );
+	int height = drawImageBuff->height( );
+	painter.fillRect( 0, 0, drawEndX, height, Qt::GlobalColor::darkGreen );
+	painter.end( );
+	return true;
+}
+bool ProgressItem::loadFileToDraw( const QString &load_image_file_path ) {
+	return Result_Var_Function_Messag_Ptr_Out_Args( false, this, loadFileToDraw, QObject::tr( "该类无法使用 loadFileToDraw" ) );
+}
+bool ProgressItem::loadStringToDraw( const QString &set_string_draw_to_buff ) {
+	return Result_Var_Function_Messag_Ptr_Out_Args( false, this, loadStringToDraw, QObject::tr( "该类无法使用 loadStringToDraw" ) );
+}
+bool ProgressItem::setDraw( const QImage &draw ) {
+	return Result_Var_Function_Messag_Ptr_Out_Args( false, this, setDraw, QObject::tr( "该类无法使用 setDraw" ) );
 }

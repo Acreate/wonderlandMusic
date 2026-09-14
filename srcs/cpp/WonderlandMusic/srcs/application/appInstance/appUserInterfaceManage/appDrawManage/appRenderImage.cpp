@@ -21,12 +21,11 @@ AppRenderImage::AppRenderImage( ) {
 }
 
 AppRenderImage::~AppRenderImage( ) {
- deleteResource(  );
-	
+	deleteResource( );
 }
 
 bool AppRenderImage::initBefore( ) {
- deleteResource(  );
+	deleteResource( );
 	return true;
 }
 
@@ -63,6 +62,27 @@ const QFont * AppRenderImage::getFont( ) const {
 
 const QFontMetrics * AppRenderImage::getFontMetrics( ) const {
 	return fontMetrics;
+}
+bool AppRenderImage::appendImage( QImage &result_render_image, const QImage &left, const QImage &right ) const {
+	int leftHeight = left.height( );
+
+	int targetHeight = right.height( );
+	if( targetHeight < leftHeight )
+		targetHeight = leftHeight;
+	leftHeight = left.width( );
+	int targetWidth = leftHeight + right.width( );
+	if( targetWidth == 0 || targetHeight == 0 )
+		return false;
+	result_render_image = QImage( targetWidth, targetHeight, QImage::Format_RGBA8888 );
+	result_render_image.fill( 0 );
+	QPainter painter;
+	painter.begin( &result_render_image );
+
+	painter.drawImage( 0, 0, left );
+	painter.drawImage( leftHeight, 0, right );
+
+	painter.end( );
+	return true;
 }
 
 bool AppRenderImage::renderTxt( QImage &result_render_image, const QString &render_txt, const QFont &font, const QFontMetrics &font_metrics ) const {

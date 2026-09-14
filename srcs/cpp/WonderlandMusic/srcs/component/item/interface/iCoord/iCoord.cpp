@@ -1,6 +1,9 @@
 ﻿#include "iCoord.h"
 
 #include <QRect>
+QRect * ICoord::getGeometryPtr( ) const {
+	return geometry;
+}
 ICoord::ICoord( ) {
 	geometry = new QRect;
 	regClassTypeInfoRef( this );

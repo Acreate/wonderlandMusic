@@ -9,6 +9,9 @@ class ICoord : public virtual ClassTypeInfoVar {
 private:
 	QRect *geometry;
 
+protected:
+	virtual QRect * getGeometryPtr( ) const;
+
 public:
 	ICoord( );
 	~ICoord( ) override;
