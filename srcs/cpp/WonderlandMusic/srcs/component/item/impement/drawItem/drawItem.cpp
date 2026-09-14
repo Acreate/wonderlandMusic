@@ -8,7 +8,7 @@ DrawItem::DrawItem( ) {
 }
 DrawItem::~DrawItem( ) {
 }
-bool DrawItem::drawToParintr( QPainter &painter ) const {
+bool DrawItem::drawToParintr( QPainter &painter ) {
 	if( IBuff::isNull( ) )
 		return false;
 	if( ICoord::isEmpty( ) )

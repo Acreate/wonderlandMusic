@@ -2,7 +2,8 @@
 
 #include <QRect>
 
-#include "../../../tools/calculateTools.h"
+#include <tools/calculateTools.h>
+
 ProgressItem::ProgressItem( ) {
 	maxVar = 100;
 }
@@ -55,4 +56,7 @@ bool ProgressItem::calculateVarXPos( int &result_x_pos, const size_t &var, const
 				result_x_pos += 1;
 	}
 	return true;
+}
+bool ProgressItem::drawToParintr( QPainter &painter ) {
+	return false;
 }

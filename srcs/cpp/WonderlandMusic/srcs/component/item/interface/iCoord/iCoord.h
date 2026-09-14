@@ -1,6 +1,6 @@
 ﻿#ifndef ICOORD_H_H_HEAD__FILE__
 #define ICOORD_H_H_HEAD__FILE__
-#include "../../../classTypeInfo/classTypeInfoVar.h"
+#include <classTypeInfo/classTypeInfoVar.h>
 
 class QPoint;
 class QRect;

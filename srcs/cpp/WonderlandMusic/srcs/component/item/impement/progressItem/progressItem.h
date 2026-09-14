@@ -2,7 +2,7 @@
 #define PROGRESSITEM_H_H_HEAD__FILE__
 #include "../drawItem/drawItem.h"
 
-class ProgressItem : public DrawItem {
+class ProgressItem : public ICoord, public IBuff {
 private:
 	size_t maxVar;
 
@@ -13,6 +13,7 @@ public:
 	virtual size_t getMaxValue( ) const;
 	virtual bool calculateXPosVar( size_t &result_var, const int &x_pos, const bool &is_ceil = true ) const;
 	virtual bool calculateVarXPos( int &result_x_pos, const size_t &var, const bool &is_ceil = true ) const;
+	bool drawToParintr( QPainter &painter ) override;
 };
 
 #endif // PROGRESSITEM_H_H_HEAD__FILE__
