@@ -3,13 +3,14 @@
 #include <QFileInfo>
 #include <qimage.h>
 
-#include "../../../../application/appInstance/appUserInterfaceManage/appDrawManage/appRenderImage.h"
+#include <application/appInstance/appUserInterfaceManage/appDrawManage/appRenderImage.h>
 
-#include "../../../../head/result_message_out.h"
+#include <head/result_message_out.h>
 
-#include "../../../../tools/instanceTools.h"
+#include <tools/instanceTools.h>
 bool ButtonItem::updateDrawBuff( ) {
-	IItemDraw::clear( );
+	if( IItemDraw::clear( ) == false )
+		return false;
 	switch( type ) {
 		case Type::Txt :
 			if( txt->isEmpty( ) )
@@ -21,7 +22,8 @@ bool ButtonItem::updateDrawBuff( ) {
 			return IItemDraw::setDraw( *this->ico );
 		case Type::All : {
 			if( txt->isEmpty( ) == false )
-				IItemDraw::loadStringToDraw( *txt );
+				if( IItemDraw::loadStringToDraw( *txt ) == false )
+					return false;
 			if( ico->width( ) == 0 || ico->height( ) == 0 )
 				if( IItemDraw::isNull( ) )
 					return false;
