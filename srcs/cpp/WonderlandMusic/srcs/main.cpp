@@ -2,8 +2,6 @@
 
 #include "head/result_message_out.h"
 
-#include "tools/calculateTools.h"
-
 int main( int argc, char *argv[ ], char *envp[ ] ) {
 	int runMainCode = -1;
 	InitMain *initMain = new InitMain( argc, argv, envp );
