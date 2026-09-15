@@ -3,9 +3,9 @@
 #include <QFileInfo>
 #include <qimage.h>
 
-#include "../../../../application/appInstance/appUserInterfaceManage/appDrawManage/appRenderImage.h"
+#include <application/appInstance/appUserInterfaceManage/appDrawManage/appRenderImage.h>
 
-#include "../../../../tools/instanceTools.h"
+#include <tools/instanceTools.h>
 QImage * IBuff::getDrawImageBuffPtr( ) const {
 	return drawImageBuff;
 }

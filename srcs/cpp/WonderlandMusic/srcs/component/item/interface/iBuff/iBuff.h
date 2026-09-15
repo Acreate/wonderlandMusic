@@ -12,6 +12,7 @@ private:
 
 protected:
 	virtual QImage * getDrawImageBuffPtr( ) const;
+	virtual bool releaseDrawImageBuff( );
 
 public:
 	IBuff( );

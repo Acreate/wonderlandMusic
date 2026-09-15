@@ -20,6 +20,7 @@ public:
 	bool loadFileToDraw( const QString &load_image_file_path ) override;
 	bool loadStringToDraw( const QString &set_string_draw_to_buff ) override;
 	bool setDraw( const QImage &draw ) override;
+	bool drawToParintr( QPainter &painter ) override;
 };
 
 #endif // PROGRESSITEM_H_H_HEAD__FILE__
