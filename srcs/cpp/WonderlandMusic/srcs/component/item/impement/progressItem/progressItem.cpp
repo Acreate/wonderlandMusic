@@ -8,6 +8,8 @@
 ProgressItem::ProgressItem( ) : ProgressItem( 100 ) {
 }
 ProgressItem::ProgressItem( ProgressItemDouble var ) : var( var ) {
+	regClassTypeInfoRef( this );
+	releaseDrawImageBuff( );
 }
 
 ProgressItem::~ProgressItem( ) {
@@ -37,8 +39,6 @@ ProgressItem::ProgressItemDouble ProgressItem::getCurrentVar( ) const {
 }
 
 bool ProgressItem::setCurrentVar( const ProgressItemDouble &new_var ) {
-	if( IItemDraw::isNull( ) )
-		return false;
 	if( new_var < 0 || new_var > ( ( ProgressItemDouble ) 100 ) )
 		return false;
 	var = new_var;
@@ -60,4 +60,11 @@ bool ProgressItem::loadStringToDraw( const QString &set_string_draw_to_buff ) {
 }
 bool ProgressItem::setDraw( const QImage &draw ) {
 	return Result_Var_Function_Messag_Ptr_Out_Args( false, this, setDraw, QObject::tr( "该类无法使用 setDraw" ) );
+}
+bool ProgressItem::drawToParintr( QPainter &painter ) {
+	auto &&geometry = ICoord::getGeometry( );
+	auto width = geometry.width( ) * var;
+	int height = geometry.height( );
+	painter.fillRect( 0, 0, width, height, Qt::GlobalColor::darkGreen );
+	return true;
 }

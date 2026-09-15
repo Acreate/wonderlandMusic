@@ -9,22 +9,36 @@
 QImage * IBuff::getDrawImageBuffPtr( ) const {
 	return drawImageBuff;
 }
+bool IBuff::releaseDrawImageBuff( ) {
+	if( drawImageBuff == nullptr )
+		return false;
+	delete drawImageBuff;
+	drawImageBuff = nullptr;
+	return true;
+}
 IBuff::IBuff( ) {
 	drawImageBuff = new QImage;
 	regClassTypeInfoRef( this );
 }
 IBuff::~IBuff( ) {
-	delete drawImageBuff;
+	if( drawImageBuff )
+		delete drawImageBuff;
 }
 QImage IBuff::getDrawImageBuff( ) const {
-	auto imageBuff = *drawImageBuff;
+	QImage imageBuff;
+	if( drawImageBuff == nullptr )
+		return imageBuff;
+	imageBuff = *drawImageBuff;
 	imageBuff.detach( );
 	return imageBuff;
 }
 bool IBuff::setDraw( const QImage &draw ) {
 	if( draw.width( ) == 0 || draw.height( ) == 0 )
 		return false;
-	*this->drawImageBuff = draw;
+	if( drawImageBuff == nullptr )
+		this->drawImageBuff = new QImage( draw );
+	else
+		*this->drawImageBuff = draw;
 	this->drawImageBuff->detach( );
 	return this->drawImageBuff->isDetached( );
 }
@@ -49,7 +63,11 @@ bool IBuff::loadStringToDraw( const QString &set_string_draw_to_buff ) {
 	if( set_string_draw_to_buff.isEmpty( ) )
 		return IBuff::clear( );
 	auto appRenderImage = InstanceTools::getAppRenderImage( );
-	return appRenderImage->renderTxt( *drawImageBuff, set_string_draw_to_buff );
+	QImage buff;
+	bool result = appRenderImage->renderTxt( buff, set_string_draw_to_buff );
+	if( result == false )
+		return false;
+	return IBuff::setDraw( buff );
 }
 bool IBuff::clear( ) {
 	if( IBuff::isNull( ) )

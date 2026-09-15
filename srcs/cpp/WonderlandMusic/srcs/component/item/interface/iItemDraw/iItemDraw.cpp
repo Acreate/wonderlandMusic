@@ -2,6 +2,7 @@
 
 #include <QPainter>
 IItemDraw::IItemDraw( ) {
+	regClassTypeInfoRef( this );
 }
 IItemDraw::~IItemDraw( ) {
 }
