@@ -20,6 +20,8 @@ namespace classTypeTools {
 
 		const IClassTypeInfo * setClassTypeInfo( const void *class_ptr, const std::type_info &class_type_info, const QString &class_type_name );
 		const IClassTypeInfo * getClassTypeInfo( const void *ty );
+		bool isType( const void *ptr, const std::type_info &ptr_type );
+		bool isType( const void *ptr, const std::type_info &ptr_type, const QString &class_type_name );
 	}
 
 	/// @brief 注册一个类型对象
@@ -78,6 +80,28 @@ namespace classTypeTools {
 		if( name.isEmpty( ) )
 			return QString( typeid( type ).name( ) );
 		return name;
+	}
+	template< typename type >
+	bool isType( const type *ptr ) {
+		auto &ptrType = typeid( type );
+		QString typeName = ptrType.name( );
+		return entityTools::isType( ptr, ptrType, typeName );
+	}
+	template< typename type >
+	bool isType( const type &ptr ) {
+		return classTypeTools::isType( &ptr );
+	}
+	template< typename type >
+	type * cast_type( type *ptr ) {
+		if( classTypeTools::isType( ptr ) == false )
+			return nullptr;
+		return ( type * ) ptr;
+	}
+	template< typename type >
+	const type * cast_type( const type *ptr ) {
+		if( classTypeTools::isType( ptr ) == false )
+			return nullptr;
+		return ( const type * ) ptr;
 	}
 }
 

@@ -44,6 +44,10 @@ protected:
 public:
 	virtual const ClassTypeInfoVar * getClassTypeInfoVar( ) const;
 	virtual TypeInfoRef * getfristTypeInfoRef( const void *ptr ) const = 0;
+	virtual TypeInfoRef * getfristTypeInfoRef( const void *ptr, const std::type_info &type_info, const QString &name ) const =0;
+	virtual TypeInfoRef * getfristTypeInfoRef( const void *ptr, const QString &name ) const =0;
+	virtual TypeInfoRef * getfristTypeInfoRef( const QString &name ) const =0;
+	virtual TypeInfoRef * getfristTypeInfoRef( const void *ptr, const std::type_info &type_info ) const =0;
 	virtual TypeInfoRef * getEntityTypeInfoRef( ) const;
 	virtual bool getAllTypeInfoRefArray( TypeInfoRef **&result_arry_ptr, size_t &result_array_count ) const;
 	virtual bool deleteClassTypeInfo( const void *p ) = 0;

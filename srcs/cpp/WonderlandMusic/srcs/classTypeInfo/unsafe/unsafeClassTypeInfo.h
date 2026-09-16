@@ -15,6 +15,10 @@ protected:
 
 public:
 	TypeInfoRef * getfristTypeInfoRef( const void *ptr ) const override;
+	TypeInfoRef * getfristTypeInfoRef( const void *ptr, const std::type_info &type_info, const QString &name ) const override;
+	TypeInfoRef * getfristTypeInfoRef( const void *ptr, const QString &name ) const override;
+	TypeInfoRef * getfristTypeInfoRef( const QString &name ) const override;
+	TypeInfoRef * getfristTypeInfoRef( const void *ptr, const std::type_info &type_info ) const override;
 	bool deleteClassTypeInfo( const void *p ) override;
 	TypeInfoRef * appendClassTypeInfo( const ClassTypeInfoVar *class_type_info_var, const void *ptr, const std::type_info &type_info, const QString &name ) override;
 };

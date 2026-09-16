@@ -34,6 +34,24 @@ const IClassTypeInfo * classTypeTools::entityTools::getClassTypeInfo( const void
 		return nullptr;
 	return findClassTypeInfo;
 }
+bool classTypeTools::entityTools::isType( const void *ptr, const std::type_info &ptr_type ) {
+	auto classTypeInfo = entityTools::getClassTypeInfo( ptr );
+	if( classTypeInfo == nullptr )
+		return false;
+	auto typeInfoRef = classTypeInfo->getfristTypeInfoRef( ptr, ptr_type );
+	if( typeInfoRef == nullptr )
+		return false;
+	return true;
+}
+bool classTypeTools::entityTools::isType( const void *ptr, const std::type_info &ptr_type, const QString &class_type_name ) {
+	auto classTypeInfo = entityTools::getClassTypeInfo( ptr );
+	if( classTypeInfo == nullptr )
+		return false;
+	auto typeInfoRef = classTypeInfo->getfristTypeInfoRef( ptr, ptr_type, class_type_name );
+	if( typeInfoRef == nullptr )
+		return false;
+	return true;
+}
 
 QString classTypeTools::entityTools::getTypeName( const void *ty ) {
 	auto classTypeInfo = entityTools::getClassTypeInfo( ty );
