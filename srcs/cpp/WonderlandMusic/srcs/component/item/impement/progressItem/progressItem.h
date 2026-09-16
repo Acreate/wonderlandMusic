@@ -6,7 +6,8 @@ class ProgressItem : public IItemDraw {
 public:
 	using ProgressItemDouble = long double;
 
-protected:
+private:
+	QRect *drawRect;
 	ProgressItemDouble var;
 
 public:
@@ -21,6 +22,13 @@ public:
 	bool loadStringToDraw( const QString &set_string_draw_to_buff ) override;
 	bool setDraw( const QImage &draw ) override;
 	bool drawToParintr( QPainter &painter ) override;
+
+public:
+	void moveTo( const int &x, const int &y ) override;
+	void reSize( const int &width, const int &height ) override;
+	void setGeometry( const QRect &geometry ) override;
+	void setGeometry( const int &x, const int &y, const int &width, const int &height ) override;
+	virtual const QRect & getDrawRect( ) const;
 };
 
 #endif // PROGRESSITEM_H_H_HEAD__FILE__

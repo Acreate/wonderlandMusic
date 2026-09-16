@@ -11,6 +11,7 @@ private:
 
 protected:
 	virtual QRect * getGeometryPtr( ) const;
+	virtual bool releaseGeometryPtr( );
 
 public:
 	ICoord( );

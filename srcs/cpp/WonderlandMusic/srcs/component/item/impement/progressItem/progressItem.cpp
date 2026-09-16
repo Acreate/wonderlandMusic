@@ -10,6 +10,7 @@ ProgressItem::ProgressItem( ) : ProgressItem( 100 ) {
 ProgressItem::ProgressItem( ProgressItemDouble var ) : var( var ) {
 	regClassTypeInfoRef( this );
 	releaseDrawImageBuff( );
+	ProgressItem::drawRect = new QRect;
 }
 
 ProgressItem::~ProgressItem( ) {
@@ -62,11 +63,27 @@ bool ProgressItem::setDraw( const QImage &draw ) {
 	return Result_Var_Function_Messag_Ptr_Out_Args( false, this, setDraw, QObject::tr( "该类无法使用 setDraw" ) );
 }
 bool ProgressItem::drawToParintr( QPainter &painter ) {
-	auto &&geometry = ICoord::getGeometry( );
-	auto width = geometry.width( ) * var / 100.0L;
-	int height = geometry.height( );
-	int x = geometry.x( );
-	int y = geometry.y( );
-	painter.fillRect( x, y, width, height, Qt::GlobalColor::darkGreen );
+	painter.fillRect( *ProgressItem::drawRect, Qt::GlobalColor::darkGreen );
 	return true;
+}
+void ProgressItem::moveTo( const int &x, const int &y ) {
+	IItemDraw::moveTo( x, y );
+	ProgressItem::drawRect->moveTo( x, y );
+}
+void ProgressItem::reSize( const int &width, const int &height ) {
+	IItemDraw::reSize( width, height );
+	ProgressItem::drawRect->setSize( QSize( width * var / 100.0L, height ) );
+}
+void ProgressItem::setGeometry( const QRect &geometry ) {
+	IItemDraw::setGeometry( geometry );
+
+	*ProgressItem::drawRect = geometry;
+	ProgressItem::drawRect->setWidth( geometry.width( ) * var / 100.0L );
+}
+void ProgressItem::setGeometry( const int &x, const int &y, const int &width, const int &height ) {
+	IItemDraw::setGeometry( x, y, width, height );
+	*ProgressItem::drawRect = QRect( x, y, width * var / 100.0L, height );
+}
+const QRect & ProgressItem::getDrawRect( ) const {
+	return *drawRect;
 }

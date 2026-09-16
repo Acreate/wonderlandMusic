@@ -7,43 +7,43 @@
 
 #include <tools/instanceTools.h>
 QImage * IBuff::getDrawImageBuffPtr( ) const {
-	return drawImageBuff;
+	return IBuff::drawImageBuff;
 }
 bool IBuff::releaseDrawImageBuff( ) {
-	if( drawImageBuff == nullptr )
+	if( IBuff::drawImageBuff == nullptr )
 		return false;
-	delete drawImageBuff;
-	drawImageBuff = nullptr;
+	delete IBuff::drawImageBuff;
+	IBuff::drawImageBuff = nullptr;
 	return true;
 }
 IBuff::IBuff( ) {
-	drawImageBuff = new QImage;
+	IBuff::drawImageBuff = new QImage;
 	regClassTypeInfoRef( this );
 }
 IBuff::~IBuff( ) {
-	if( drawImageBuff )
-		delete drawImageBuff;
+	if( IBuff::drawImageBuff )
+		delete IBuff::drawImageBuff;
 }
 QImage IBuff::getDrawImageBuff( ) const {
 	QImage imageBuff;
-	if( drawImageBuff == nullptr )
+	if( IBuff::drawImageBuff == nullptr )
 		return imageBuff;
-	imageBuff = *drawImageBuff;
+	imageBuff = *IBuff::drawImageBuff;
 	imageBuff.detach( );
 	return imageBuff;
 }
 bool IBuff::setDraw( const QImage &draw ) {
 	if( draw.width( ) == 0 || draw.height( ) == 0 )
 		return false;
-	if( drawImageBuff == nullptr )
-		this->drawImageBuff = new QImage( draw );
+	if( IBuff::drawImageBuff == nullptr )
+		this->IBuff::drawImageBuff = new QImage( draw );
 	else
-		*this->drawImageBuff = draw;
-	this->drawImageBuff->detach( );
-	return this->drawImageBuff->isDetached( );
+		*this->IBuff::drawImageBuff = draw;
+	this->IBuff::drawImageBuff->detach( );
+	return this->IBuff::drawImageBuff->isDetached( );
 }
 bool IBuff::isNull( ) const {
-	if( drawImageBuff == nullptr || drawImageBuff->width( ) == 0 || drawImageBuff->height( ) == 0 )
+	if( IBuff::drawImageBuff == nullptr || IBuff::drawImageBuff->width( ) == 0 || IBuff::drawImageBuff->height( ) == 0 )
 		return true;
 	return false;
 }
@@ -72,24 +72,24 @@ bool IBuff::loadStringToDraw( const QString &set_string_draw_to_buff ) {
 bool IBuff::clear( ) {
 	if( IBuff::isNull( ) )
 		return true;
-	*drawImageBuff = QImage( );
+	*IBuff::drawImageBuff = QImage( );
 	return true;
 }
 bool IBuff::zoomTo( const int &width, const int &height ) {
 	if( IBuff::isNull( ) )
 		return false;
-	*drawImageBuff = drawImageBuff->scaled( width, height );
+	*IBuff::drawImageBuff = IBuff::drawImageBuff->scaled( width, height );
 	return true;
 }
 bool IBuff::zoomToWidth( const int &width ) {
 	if( IBuff::isNull( ) )
 		return false;
-	*drawImageBuff = drawImageBuff->scaledToWidth( width );
+	*IBuff::drawImageBuff = IBuff::drawImageBuff->scaledToWidth( width );
 	return true;
 }
 bool IBuff::zoomToHeight( const int &height ) {
 	if( IBuff::isNull( ) )
 		return false;
-	*drawImageBuff = drawImageBuff->scaledToHeight( height );
+	*IBuff::drawImageBuff = IBuff::drawImageBuff->scaledToHeight( height );
 	return true;
 }

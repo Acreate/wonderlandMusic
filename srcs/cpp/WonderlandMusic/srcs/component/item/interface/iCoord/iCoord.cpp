@@ -4,6 +4,13 @@
 QRect * ICoord::getGeometryPtr( ) const {
 	return ICoord::geometry;
 }
+bool ICoord::releaseGeometryPtr( ) {
+	if( ICoord::geometry == nullptr )
+		return false;
+	delete ICoord::geometry;
+	ICoord::geometry = nullptr;
+	return true;
+}
 ICoord::ICoord( ) {
 	ICoord::geometry = new QRect;
 	regClassTypeInfoRef( this );
@@ -29,8 +36,8 @@ bool ICoord::isEmpty( ) const {
 	return false;
 }
 void ICoord::reSize( const int &width, const int &height ) {
-	*ICoord::geometry = QRect( ICoord::geometry->x( ), ICoord::geometry->y( ), width, height );
+	ICoord::geometry->setSize( QSize( width, height ) );
 }
 void ICoord::moveTo( const int &x, const int &y ) {
-	*ICoord::geometry = QRect( x, y, ICoord::geometry->width( ), ICoord::geometry->height( ) );
+	ICoord::geometry->moveTo( x, y );
 }
