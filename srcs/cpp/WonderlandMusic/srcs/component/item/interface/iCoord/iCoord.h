@@ -17,6 +17,7 @@ public:
 	~ICoord( ) override;
 	virtual const QRect & getGeometry( ) const;
 	virtual void setGeometry( const QRect &geometry );
+	virtual void setGeometry( const int &x, const int &y, const int &width, const int &height );
 	virtual bool isClick( const QPoint &point ) const;
 	virtual bool isEmpty( ) const;
 	virtual void reSize( const int &width, const int &height );

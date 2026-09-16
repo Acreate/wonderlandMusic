@@ -63,8 +63,10 @@ bool ProgressItem::setDraw( const QImage &draw ) {
 }
 bool ProgressItem::drawToParintr( QPainter &painter ) {
 	auto &&geometry = ICoord::getGeometry( );
-	auto width = geometry.width( ) * var;
+	auto width = geometry.width( ) * var / 100.0L;
 	int height = geometry.height( );
-	painter.fillRect( 0, 0, width, height, Qt::GlobalColor::darkGreen );
+	int x = geometry.x( );
+	int y = geometry.y( );
+	painter.fillRect( x, y, width, height, Qt::GlobalColor::darkGreen );
 	return true;
 }

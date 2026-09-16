@@ -2,32 +2,35 @@
 
 #include <QRect>
 QRect * ICoord::getGeometryPtr( ) const {
-	return geometry;
+	return ICoord::geometry;
 }
 ICoord::ICoord( ) {
-	geometry = new QRect;
+	ICoord::geometry = new QRect;
 	regClassTypeInfoRef( this );
 }
 ICoord::~ICoord( ) {
-	delete geometry;
+	delete ICoord::geometry;
 }
 const QRect & ICoord::getGeometry( ) const {
-	return *geometry;
+	return *ICoord::geometry;
 }
 void ICoord::setGeometry( const QRect &geometry ) {
-	*this->geometry = geometry;
+	*this->ICoord::geometry = geometry;
+}
+void ICoord::setGeometry( const int &x, const int &y, const int &width, const int &height ) {
+	*this->ICoord::geometry = QRect( x, y, width, height );
 }
 bool ICoord::isClick( const QPoint &point ) const {
-	return geometry->contains( point );
+	return ICoord::geometry->contains( point );
 }
 bool ICoord::isEmpty( ) const {
-	if( geometry->width( ) == 0 || geometry->height( ) == 0 )
+	if( ICoord::geometry->width( ) == 0 || ICoord::geometry->height( ) == 0 )
 		return true;
 	return false;
 }
 void ICoord::reSize( const int &width, const int &height ) {
-	*geometry = QRect( geometry->x( ), geometry->y( ), width, height );
+	*ICoord::geometry = QRect( ICoord::geometry->x( ), ICoord::geometry->y( ), width, height );
 }
 void ICoord::moveTo( const int &x, const int &y ) {
-	*geometry = QRect( x, y, geometry->width( ), geometry->height( ) );
+	*ICoord::geometry = QRect( x, y, ICoord::geometry->width( ), ICoord::geometry->height( ) );
 }

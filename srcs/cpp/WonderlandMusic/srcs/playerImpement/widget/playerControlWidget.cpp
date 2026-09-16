@@ -54,9 +54,9 @@ bool PlayerControlWidget::updateLayout( ) {
 	if( isHidden( ) == true )
 		return false;
 	userMutex->lock( );
-	int offsetX = 20;
-	int offsetY = 10;
 	int itemSpace = 10;
+	int offsetX = itemSpace * 2;
+	int offsetY = itemSpace;
 	int height = this->height( ) - offsetY - offsetY;
 	#define move_to_pos( _ptr, _x, _y, _scale_to_height , _move_erro_msg, _scale_erro_msg) \
 		_ptr->moveTo( _x, _y );\
@@ -73,6 +73,12 @@ bool PlayerControlWidget::updateLayout( ) {
 	move_to_pos( theNextStep, offsetX, offsetY, height, tr( "移动失败" ), tr( "缩放失败失败" ) )
 	offsetX += theNextStep->getGeometry( ).width( ) + itemSpace;
 	move_to_pos( theNextSong, offsetX, offsetY, height, tr( "移动失败" ), tr( "缩放失败失败" ) )
+	offsetX += theNextSong->getGeometry( ).width( ) + itemSpace;
+	// 进度条
+	int width = this->width( );
+	int modWidth = width - offsetX - itemSpace * 2;
+	playerProgressItem->setGeometry( offsetX, offsetY, modWidth, height );
+	// 时间
 	userMutex->unlock( );
 	repaint( );
 	return true;
@@ -109,7 +115,8 @@ bool PlayerControlWidget::deleteResource( ) {
 	return true;
 }
 void PlayerControlWidget::paintEvent( QPaintEvent *event ) {
-	QWidget::paintEvent( event );
+	if( userMutex == nullptr )
+		return;
 	QPainter painter( this );
 	userMutex->lock( );
 	thePreviousSong->drawToParintr( painter );
@@ -117,6 +124,7 @@ void PlayerControlWidget::paintEvent( QPaintEvent *event ) {
 	play->drawToParintr( painter );
 	theNextStep->drawToParintr( painter );
 	theNextSong->drawToParintr( painter );
+	playerProgressItem->drawToParintr( painter );
 	userMutex->unlock( );
 }
 void PlayerControlWidget::mouseDoubleClickEvent( QMouseEvent *event ) {
