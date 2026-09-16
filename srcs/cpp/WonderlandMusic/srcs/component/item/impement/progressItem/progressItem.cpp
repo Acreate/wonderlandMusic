@@ -14,6 +14,7 @@ ProgressItem::ProgressItem( ProgressItemDouble var ) : var( var ) {
 }
 
 ProgressItem::~ProgressItem( ) {
+	delete ProgressItem::drawRect;
 }
 bool ProgressItem::calculateXPosVar( ProgressItemDouble &result_var, const int &x_pos ) const {
 	auto &&geometry = ICoord::getGeometry( );

@@ -16,7 +16,8 @@ ICoord::ICoord( ) {
 	regClassTypeInfoRef( this );
 }
 ICoord::~ICoord( ) {
-	delete ICoord::geometry;
+	if( ICoord::geometry )
+		delete ICoord::geometry;
 }
 const QRect & ICoord::getGeometry( ) const {
 	return *ICoord::geometry;
