@@ -43,6 +43,7 @@ bool ButtonItem::updateDrawBuff( ) {
 ButtonItem::ButtonItem( ) {
 	txt = new QString;
 	ico = new QImage;
+	regClassTypeInfoRef( this );
 }
 ButtonItem::~ButtonItem( ) {
 	delete txt;
@@ -51,11 +52,11 @@ ButtonItem::~ButtonItem( ) {
 ButtonItem::ButtonItem( ButtonItem::Type type ) : ButtonItem( ) {
 	this->type = type;
 }
-ButtonItem::ButtonItem(const QString &txt ) : ButtonItem( ) {
+ButtonItem::ButtonItem( const QString &txt ) : ButtonItem( ) {
 	type = Type::Txt;
 	setTxt( txt );
 }
-ButtonItem::ButtonItem(const QImage &ico ) : ButtonItem( ) {
+ButtonItem::ButtonItem( const QImage &ico ) : ButtonItem( ) {
 	type = Type::Ico;
 	setIco( ico );
 }

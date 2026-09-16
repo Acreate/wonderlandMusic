@@ -33,8 +33,11 @@ UnsafeClassTypeInfoStack::~UnsafeClassTypeInfoStack( ) {
 bool UnsafeClassTypeInfoStack::appendClassTypeInfoVar( IClassTypeInfo *class_type_info_ptr, const void *ptr, const std::type_info &class_type_info, const QString &class_type_name ) {
 	size_t index;
 	IClassTypeInfo *result;
-	if( UnsafeClassTypeInfoStack::fromClassTypeInfoVarGetClassTypeInfo( index, result, class_type_info_ptr ) )
-		return result->appendClassTypeInfo( result->getClassTypeInfoVar( ), ptr, class_type_info, class_type_name );
+	if( UnsafeClassTypeInfoStack::fromClassTypeInfoVarGetClassTypeInfo( index, result, class_type_info_ptr ) ) {
+		auto classTypeInfoVar = result->getClassTypeInfoVar( );
+		TypeInfoRef *classTypeInfo = result->appendClassTypeInfo( classTypeInfoVar, ptr, class_type_info, class_type_name );
+		return false;
+	}
 	classTypeInfoVector.emplace_back( class_type_info_ptr );
 	return class_type_info_ptr->appendClassTypeInfo( class_type_info_ptr->getClassTypeInfoVar( ), ptr, class_type_info, class_type_name );
 }
