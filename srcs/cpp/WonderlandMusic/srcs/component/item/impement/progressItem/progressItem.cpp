@@ -10,7 +10,6 @@ ProgressItem::ProgressItem( ) : ProgressItem( 1 ) {
 ProgressItem::ProgressItem( ProgressItemDouble var ) : var( var ) {
 	regClassTypeInfoRef( this );
 	releaseDrawImageBuff( );
-	bool isType = classTypeTools::isType< IItemDraw >( this );
 	ProgressItem::drawRect = new QRect;
 }
 
