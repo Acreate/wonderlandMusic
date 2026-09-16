@@ -81,27 +81,26 @@ namespace classTypeTools {
 			return QString( typeid( type ).name( ) );
 		return name;
 	}
-	template< typename type >
-	bool isType( const type *ptr ) {
-		auto &ptrType = typeid( type );
-		QString typeName = ptrType.name( );
-		return entityTools::isType( ptr, ptrType, typeName );
-	}
-	template< typename type >
+	template< typename target_type, typename type >
 	bool isType( const type &ptr ) {
-		return classTypeTools::isType( &ptr );
+		auto &ptrType = typeid( target_type );
+		QString typeName = ptrType.name( );
+		constexpr bool is_type_ptr = std::is_pointer_v< type >;
+		if constexpr( is_type_ptr )
+			return entityTools::isType( ptr, ptrType, typeName );
+		return entityTools::isType( &ptr, ptrType, typeName );
 	}
-	template< typename type >
-	type * cast_type( type *ptr ) {
-		if( classTypeTools::isType( ptr ) == false )
+	template< typename target_type, typename type >
+	target_type * cast_type( type *ptr ) {
+		if( classTypeTools::isType< target_type >( ptr ) == false )
 			return nullptr;
-		return ( type * ) ptr;
+		return ( target_type * ) ptr;
 	}
-	template< typename type >
-	const type * cast_type( const type *ptr ) {
-		if( classTypeTools::isType( ptr ) == false )
+	template< typename target_type, typename type >
+	const target_type * cast_type( const type *ptr ) {
+		if( classTypeTools::isType< target_type >( ptr ) == false )
 			return nullptr;
-		return ( const type * ) ptr;
+		return ( const target_type * ) ptr;
 	}
 }
 

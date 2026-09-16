@@ -47,7 +47,12 @@ bool classTypeTools::entityTools::isType( const void *ptr, const std::type_info 
 	auto classTypeInfo = entityTools::getClassTypeInfo( ptr );
 	if( classTypeInfo == nullptr )
 		return false;
-	auto typeInfoRef = classTypeInfo->getfristTypeInfoRef( ptr, ptr_type, class_type_name );
+	auto charses = class_type_name.split( " " );
+	qint64 nameCount = charses.size( );
+	if( nameCount == 0 )
+		return false;
+	auto className = charses.data( )[ nameCount - 1 ];
+	auto typeInfoRef = classTypeInfo->getfristTypeInfoRef( ptr, ptr_type, className );
 	if( typeInfoRef == nullptr )
 		return false;
 	return true;
