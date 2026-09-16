@@ -80,7 +80,7 @@ bool TimeItem::setDraw( const QImage &draw ) {
 	return Result_Var_Function_Messag_Ptr_Out_Args( false, this, setDraw, QObject::tr( "该类无法使用 setDraw" ) );
 }
 QString TimeItem::toString( ) const {
-	return DateTimeFormat::millsecondToHourMinSecFrom( *TimeItem::time );
+	return DateTimeFormat::millsecondToHourMinSecFrom( *TimeItem::time, true );
 }
 bool TimeItem::drawToParintr( QPainter &painter ) {
 	return IItemDraw::drawToParintr( painter );

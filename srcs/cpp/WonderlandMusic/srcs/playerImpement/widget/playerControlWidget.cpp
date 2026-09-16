@@ -75,16 +75,18 @@ bool PlayerControlWidget::updateLayout( ) {
 	move_to_pos( theNextStep, offsetX, offsetY, height, tr( "移动失败" ), tr( "缩放失败失败" ) )
 	offsetX += theNextStep->getGeometry( ).width( ) + itemSpace;
 	move_to_pos( theNextSong, offsetX, offsetY, height, tr( "移动失败" ), tr( "缩放失败失败" ) )
-	offsetX += theNextSong->getGeometry( ).width( ) + itemSpace;
+	offsetX += theNextSong->getGeometry( ).width( ) + itemSpace * 4;
 	// 进度条
 	int width = this->width( );
 	int modWidth;
-	playerTimeItem->setFontSize( height );
+	auto heightHalf = height / 2;
+	playerTimeItem->setFontSize( heightHalf );
 	playerTimeItem->scaleToImageSize( );
 	modWidth = width - playerTimeItem->getGeometry( ).width( ) - itemSpace * 2;
 	playerTimeItem->moveTo( modWidth, offsetY );
 	modWidth = width - offsetX - itemSpace * 2;
-	height = height / 2;
+	height = height - heightHalf - itemSpace;
+	offsetY = offsetY + heightHalf + itemSpace;
 	playerProgressItem->setGeometry( offsetX, offsetY, modWidth, height );
 	// 时间
 	userMutex->unlock( );
@@ -132,7 +134,7 @@ void PlayerControlWidget::paintEvent( QPaintEvent *event ) {
 	play->drawToParintr( painter );
 	theNextStep->drawToParintr( painter );
 	theNextSong->drawToParintr( painter );
-	//playerProgressItem->drawToParintr( painter );
+	playerProgressItem->drawToParintr( painter );
 	playerTimeItem->drawToParintr( painter );
 	userMutex->unlock( );
 }
