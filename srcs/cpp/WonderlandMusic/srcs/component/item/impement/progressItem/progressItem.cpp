@@ -5,10 +5,11 @@
 
 #include <head/result_message_out.h>
 
-ProgressItem::ProgressItem( ) : ProgressItem( 100 ) {
+ProgressItem::ProgressItem( ) : ProgressItem( 1 ) {
 }
 ProgressItem::ProgressItem( ProgressItemDouble var ) : var( var ) {
 	regClassTypeInfoRef( this );
+
 	releaseDrawImageBuff( );
 	ProgressItem::drawRect = new QRect;
 }

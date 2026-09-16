@@ -1,5 +1,7 @@
 ﻿#include "iClassTypeInfo.h"
 
+#include <QStringList>
+
 #include "../typeInfoRef.h"
 void IClassTypeInfo::moveNullptrToStartArray( ) {
 	if( aliasTypeInfoArrayPtr == nullptr && typeInfoMaxCout == 0 || typeInfoMaxCout == typeInfoCrrentCout && aliasTypeInfoArrayPtr == nullptr )
@@ -68,11 +70,33 @@ IClassTypeInfo::~IClassTypeInfo( ) {
 const ClassTypeInfoVar * IClassTypeInfo::getClassTypeInfoVar( ) const {
 	return classTypeInfoVar;
 }
-TypeInfoRef * IClassTypeInfo::getEntityClassTypeInfo( ) const {
+TypeInfoRef * IClassTypeInfo::getEntityTypeInfoRef( ) const {
 	if( typeInfoMaxCout == 0 || aliasTypeInfoArrayPtr == nullptr )
 		return nullptr;
 	return aliasTypeInfoArrayPtr[ typeInfoCrrentCout ];
 }
+bool IClassTypeInfo::getAllTypeInfoRefArray( TypeInfoRef **&result_arry_ptr, size_t &result_array_count ) const {
+	if( typeInfoMaxCout == 0 || aliasTypeInfoArrayPtr == nullptr )
+		return false;
+	result_arry_ptr = aliasTypeInfoArrayPtr + typeInfoCrrentCout;
+	result_array_count = typeInfoMaxCout - typeInfoCrrentCout;
+	return true;
+}
+bool IClassTypeInfo::getClassNameVector( std::vector< QString > &result_name ) const {
+	TypeInfoRef **result_arry_ptr;
+	size_t result_array_count;
+	if( IClassTypeInfo::getAllTypeInfoRefArray( result_arry_ptr, result_array_count ) ) {
+		size_t index = 0;
+		result_name.resize( result_array_count );
+		auto nameData = result_name.data( );
+		for( ; index < result_array_count; index += 1 )
+			nameData[ index ] = result_arry_ptr[ index ]->getName( );
+		return true;
+	}
+
+	return false;
+}
+
 void IClassTypeInfo::deleteArrayClassTypeInfo( ) {
 	size_t typeIndex;
 	if( typeInfoMaxCout && aliasTypeInfoArrayPtr )

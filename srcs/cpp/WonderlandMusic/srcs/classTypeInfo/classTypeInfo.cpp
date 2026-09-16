@@ -26,15 +26,21 @@ bool ClassTypeInfo::deleteClassTypeInfo( const void *ptr ) {
 	userMutex->unlock( );
 	return result;
 }
-TypeInfoRef * ClassTypeInfo::getfristClassTypeInfo( const void *ptr ) const {
+TypeInfoRef * ClassTypeInfo::getfristTypeInfoRef( const void *ptr ) const {
 	userMutex->lock( );
-	auto result = UnsafeClassTypeInfo::getfristClassTypeInfo( ptr );
+	auto result = UnsafeClassTypeInfo::getfristTypeInfoRef( ptr );
 	userMutex->unlock( );
 	return result;
 }
-TypeInfoRef * ClassTypeInfo::getEntityClassTypeInfo( ) const {
+TypeInfoRef * ClassTypeInfo::getEntityTypeInfoRef( ) const {
 	userMutex->lock( );
-	auto result = UnsafeClassTypeInfo::getEntityClassTypeInfo( );
+	auto result = UnsafeClassTypeInfo::getEntityTypeInfoRef( );
+	userMutex->unlock( );
+	return result;
+}
+bool ClassTypeInfo::getAllTypeInfoRefArray( TypeInfoRef **&result_arry_ptr, size_t &result_array_count ) const {
+	userMutex->lock( );
+	bool result = UnsafeClassTypeInfo::getAllTypeInfoRefArray( result_arry_ptr, result_array_count );
 	userMutex->unlock( );
 	return result;
 }

@@ -41,7 +41,8 @@ protected:
 	template< typename Reg_Ptr_Type >
 	const IClassTypeInfo * regClassTypeInfoRef( Reg_Ptr_Type *ptr ) {
 		auto &typeInfo = typeid( Reg_Ptr_Type );
-		return setClassTypeInfo( ptr, ptr, typeInfo, typeInfo.name( ) );
+		auto classTypeName = typeInfo.name( );
+		return setClassTypeInfo( ptr, ptr, typeInfo, classTypeName );
 	}
 
 	/// @brief 查找一个类型对象

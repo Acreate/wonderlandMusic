@@ -2,6 +2,9 @@
 
 #include "../interface/iClassTypeInfo.h"
 #include <qdebug.h>
+
+#include "../typeInfoRef.h"
+
 const IClassTypeInfo * UnsafeClassTypeInfoStack::fromClassTypeInfoVarGetClassTypeInfo( const IClassTypeInfo *class_type_info ) const {
 	size_t index;
 	IClassTypeInfo *result;
@@ -30,16 +33,19 @@ UnsafeClassTypeInfoStack::UnsafeClassTypeInfoStack( ) {
 UnsafeClassTypeInfoStack::~UnsafeClassTypeInfoStack( ) {
 	UnsafeClassTypeInfoStack::clear( );
 }
-bool UnsafeClassTypeInfoStack::appendClassTypeInfoVar( IClassTypeInfo *class_type_info_ptr, const void *ptr, const std::type_info &class_type_info, const QString &class_type_name ) {
+const IClassTypeInfo * UnsafeClassTypeInfoStack::appendClassTypeInfoVar( IClassTypeInfo *class_type_info_ptr, const void *ptr, const std::type_info &class_type_info, const QString &class_type_name ) {
 	size_t index;
 	IClassTypeInfo *result;
 	if( UnsafeClassTypeInfoStack::fromClassTypeInfoVarGetClassTypeInfo( index, result, class_type_info_ptr ) ) {
 		auto classTypeInfoVar = result->getClassTypeInfoVar( );
 		TypeInfoRef *classTypeInfo = result->appendClassTypeInfo( classTypeInfoVar, ptr, class_type_info, class_type_name );
-		return false;
+		if( classTypeInfo == nullptr )
+			return nullptr;
+		return result;
 	}
 	classTypeInfoVector.emplace_back( class_type_info_ptr );
-	return class_type_info_ptr->appendClassTypeInfo( class_type_info_ptr->getClassTypeInfoVar( ), ptr, class_type_info, class_type_name );
+	class_type_info_ptr->appendClassTypeInfo( class_type_info_ptr->getClassTypeInfoVar( ), ptr, class_type_info, class_type_name );
+	return class_type_info_ptr;
 }
 const IClassTypeInfo * UnsafeClassTypeInfoStack::getClassTypeInfo( const void *ptr ) const {
 	IClassTypeInfo *result;
@@ -57,7 +63,7 @@ const bool UnsafeClassTypeInfoStack::getClassTypeInfo( size_t &result_index, ICl
 			return true;
 		}
 	for( result_index = 0; result_index < count; result_index += 1 )
-		if( data[ result_index ]->getfristClassTypeInfo( ptr ) ) {
+		if( data[ result_index ]->getfristTypeInfoRef( ptr ) ) {
 			result_class_type_info = data[ result_index ];
 			return true;
 		}

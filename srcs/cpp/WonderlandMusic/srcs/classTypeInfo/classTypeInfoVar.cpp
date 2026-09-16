@@ -13,7 +13,8 @@ const IClassTypeInfo * ClassTypeInfoVar::setClassTypeInfo( const ClassTypeInfoVa
 	auto appInstance = InstanceTools::getAppInstance( );
 	if( appInstance == nullptr )
 		return nullptr;
-	return appInstance->appendClassTypeInfoVar( this, ptr, class_type_info, class_type_name );
+	QString typeName = class_type_name;
+	return appInstance->appendClassTypeInfoVar( class_ptr, ptr, class_type_info, typeName );
 }
 bool ClassTypeInfoVar::deleteClassTypeInfo( const void *class_ptr ) {
 	auto appInstance = InstanceTools::getAppInstance( );

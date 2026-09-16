@@ -111,10 +111,10 @@ ApplicationManage * AppInstance::getApplicationManage( ) const {
 const IClassTypeInfo * AppInstance::appendClassTypeInfoVar( const ClassTypeInfoVar *class_type_info_var, const void *ptr, const std::type_info &class_type_info, const QString &class_type_name ) {
 	auto classTypeInfo = new ClassTypeInfo( class_type_info_var );
 	auto result = classTypeInfoStack->appendClassTypeInfoVar( classTypeInfo, ptr, class_type_info, class_type_name );
-	if( result )
+	if( result == classTypeInfo )
 		return classTypeInfo;
 	delete classTypeInfo;
-	return nullptr;
+	return result;
 }
 const IClassTypeInfo * AppInstance::findClassTypeInfo( const void *ptr ) const {
 	return classTypeInfoStack->getClassTypeInfo( ptr );

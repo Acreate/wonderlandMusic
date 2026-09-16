@@ -14,7 +14,7 @@ protected:
 	explicit UnsafeClassTypeInfo( const ClassTypeInfoVar *class_type_info_var );
 
 public:
-	TypeInfoRef * getfristClassTypeInfo( const void *ptr ) const override;
+	TypeInfoRef * getfristTypeInfoRef( const void *ptr ) const override;
 	bool deleteClassTypeInfo( const void *p ) override;
 	TypeInfoRef * appendClassTypeInfo( const ClassTypeInfoVar *class_type_info_var, const void *ptr, const std::type_info &type_info, const QString &name ) override;
 };

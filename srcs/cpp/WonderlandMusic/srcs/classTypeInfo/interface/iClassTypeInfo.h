@@ -2,6 +2,7 @@
 #define ICLASSTYPEINFO_H_H_HEAD__FILE__
 
 #include <typeinfo>
+#include <vector>
 class ClassTypeInfo;
 class ClassTypeInfoVar;
 class TypeInfoRef;
@@ -42,10 +43,12 @@ protected:
 
 public:
 	virtual const ClassTypeInfoVar * getClassTypeInfoVar( ) const;
-	virtual TypeInfoRef * getfristClassTypeInfo( const void *ptr ) const = 0;
-	virtual TypeInfoRef * getEntityClassTypeInfo( ) const;
+	virtual TypeInfoRef * getfristTypeInfoRef( const void *ptr ) const = 0;
+	virtual TypeInfoRef * getEntityTypeInfoRef( ) const;
+	virtual bool getAllTypeInfoRefArray( TypeInfoRef **&result_arry_ptr, size_t &result_array_count ) const;
 	virtual bool deleteClassTypeInfo( const void *p ) = 0;
 	virtual TypeInfoRef * appendClassTypeInfo( const ClassTypeInfoVar *class_type_info_var, const void *ptr, const std::type_info &type_info, const QString &name ) = 0;
+	virtual bool getClassNameVector( std::vector< QString > &result_name ) const;
 };
 
 #endif // ICLASSTYPEINFO_H_H_HEAD__FILE__

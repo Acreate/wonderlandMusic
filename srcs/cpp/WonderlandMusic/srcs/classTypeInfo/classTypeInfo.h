@@ -18,8 +18,9 @@ public:
 
 	TypeInfoRef * appendClassTypeInfo( const ClassTypeInfoVar *class_type_info_var, const void *ptr, const std::type_info &type_info, const QString &name ) override;
 	bool deleteClassTypeInfo( const void *p ) override;
-	TypeInfoRef * getfristClassTypeInfo( const void *ptr ) const override;
-	TypeInfoRef * getEntityClassTypeInfo( ) const override;
+	TypeInfoRef * getfristTypeInfoRef( const void *ptr ) const override;
+	TypeInfoRef * getEntityTypeInfoRef( ) const override;
+	bool getAllTypeInfoRefArray( TypeInfoRef **&result_arry_ptr, size_t &result_array_count ) const override;
 };
 
 #endif // CLASSTYPEINFO_H_H_HEAD__FILE__

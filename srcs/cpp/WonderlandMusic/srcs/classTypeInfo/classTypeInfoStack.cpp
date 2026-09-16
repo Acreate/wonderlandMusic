@@ -10,7 +10,7 @@ ClassTypeInfoStack::~ClassTypeInfoStack( ) {
 	userMutex->unlock( );
 	delete userMutex;
 }
-bool ClassTypeInfoStack::appendClassTypeInfoVar( IClassTypeInfo *class_type_info_ptr, const void *ptr, const std::type_info &class_type_info, const QString &class_type_name ) {
+const IClassTypeInfo * ClassTypeInfoStack::appendClassTypeInfoVar( IClassTypeInfo *class_type_info_ptr, const void *ptr, const std::type_info &class_type_info, const QString &class_type_name ) {
 	userMutex->lock( );
 	auto result = UnsafeClassTypeInfoStack::appendClassTypeInfoVar( class_type_info_ptr, ptr, class_type_info, class_type_name );
 	userMutex->unlock( );

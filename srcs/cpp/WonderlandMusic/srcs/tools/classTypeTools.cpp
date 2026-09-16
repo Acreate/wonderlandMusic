@@ -39,7 +39,7 @@ QString classTypeTools::entityTools::getTypeName( const void *ty ) {
 	auto classTypeInfo = entityTools::getClassTypeInfo( ty );
 	if( classTypeInfo == nullptr )
 		return QString( );
-	auto typeInfoRef = classTypeInfo->getEntityClassTypeInfo( );
+	auto typeInfoRef = classTypeInfo->getEntityTypeInfoRef( );
 	if( typeInfoRef == nullptr )
 		return QString( "" );
 	auto name = typeInfoRef->getName( );
