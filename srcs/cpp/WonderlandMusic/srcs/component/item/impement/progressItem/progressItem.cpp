@@ -29,7 +29,7 @@ bool ProgressItem::calculateXPosVar( ProgressItemDouble &result_var, const int &
 	return true;
 }
 bool ProgressItem::calculateVarXPos( int &result_x_pos, const ProgressItemDouble &new_var ) const {
-	if( new_var < 0 || new_var > ( ( ProgressItemDouble ) 100 ) )
+	if( new_var < 0.0 || new_var > 1.0 )
 		return false;
 	auto &&geometry = ICoord::getGeometry( );
 	result_x_pos = geometry.width( ) * new_var;
@@ -40,17 +40,12 @@ ProgressItem::ProgressItemDouble ProgressItem::getCurrentVar( ) const {
 }
 
 bool ProgressItem::setCurrentVar( const ProgressItemDouble &new_var ) {
-	if( new_var < 0 || new_var > ( ( ProgressItemDouble ) 100 ) )
+	if( new_var > 1.0 || new_var < 0.0 )
 		return false;
 	var = new_var;
-	auto &&geometry = ICoord::getGeometry( );
-	auto width = geometry.width( ) * var;
-	auto drawImageBuff = IItemDraw::getDrawImageBuffPtr( );
-	QPainter painter;
-	painter.begin( drawImageBuff );
-	int height = drawImageBuff->height( );
-	painter.fillRect( 0, 0, width, height, Qt::GlobalColor::darkGreen );
-	painter.end( );
+	int width = IItemDraw::getGeometry( ).width( );
+	width = width * var;
+	ProgressItem::drawRect->setWidth( width );
 	return true;
 }
 bool ProgressItem::loadFileToDraw( const QString &load_image_file_path ) {
@@ -72,17 +67,17 @@ void ProgressItem::moveTo( const int &x, const int &y ) {
 }
 void ProgressItem::reSize( const int &width, const int &height ) {
 	IItemDraw::reSize( width, height );
-	ProgressItem::drawRect->setSize( QSize( width * var / 100.0L, height ) );
+	ProgressItem::drawRect->setSize( QSize( width * var, height ) );
 }
 void ProgressItem::setGeometry( const QRect &geometry ) {
 	IItemDraw::setGeometry( geometry );
 
 	*ProgressItem::drawRect = geometry;
-	ProgressItem::drawRect->setWidth( geometry.width( ) * var / 100.0L );
+	ProgressItem::drawRect->setWidth( geometry.width( ) * var );
 }
 void ProgressItem::setGeometry( const int &x, const int &y, const int &width, const int &height ) {
 	IItemDraw::setGeometry( x, y, width, height );
-	*ProgressItem::drawRect = QRect( x, y, width * var / 100.0L, height );
+	*ProgressItem::drawRect = QRect( x, y, width * var, height );
 }
 const QRect & ProgressItem::getDrawRect( ) const {
 	return *drawRect;
