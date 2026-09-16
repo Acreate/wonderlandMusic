@@ -10,10 +10,8 @@
 
 #include "../../component/item/impement/buttonItem/buttonItem.h"
 #include "../../component/item/impement/progressItem/progressItem.h"
-#include "../../component/item/impement/stringItem/stringItem.h"
 #include "../../component/item/impement/timeItem/timeItem.h"
 
-#include "../../head/q_debug_message_var_out.h"
 #include "../../head/release_macro.h"
 #include "../../head/result_message_out.h"
 

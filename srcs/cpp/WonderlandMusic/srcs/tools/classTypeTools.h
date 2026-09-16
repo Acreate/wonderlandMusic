@@ -118,7 +118,7 @@ namespace classTypeTools {
 	}
 	/// @brief 剥离描述符类型
 	template< typename T >
-	using TStripAllPtrRef = typename decltype(stripPtrAndRef< T >( ))::type;
+	using TStripAllPtrRef_T = typename decltype(stripPtrAndRef< T >( ))::type;
 
 	/// @brief 注册一个类型对象
 	/// @tparam Reg_Ptr_Type 注册的类型
