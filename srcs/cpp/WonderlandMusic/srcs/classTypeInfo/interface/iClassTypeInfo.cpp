@@ -90,7 +90,7 @@ bool IClassTypeInfo::getClassNameVector( std::vector< QString > &result_name ) c
 		result_name.resize( result_array_count );
 		auto nameData = result_name.data( );
 		for( ; index < result_array_count; index += 1 )
-			nameData[ index ] = result_arry_ptr[ index ]->getName( );
+			nameData[ index ] = QString( "%1(0x%2)" ).arg( result_arry_ptr[ index ]->getName( ) ).arg( QString::number( ( size_t ) result_arry_ptr[ index ]->getPtr( ), 16 ) );
 		return true;
 	}
 

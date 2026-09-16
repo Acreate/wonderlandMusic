@@ -108,19 +108,14 @@ AppDateTimerManage * AppInstance::getAppDateTimerManage( ) const {
 ApplicationManage * AppInstance::getApplicationManage( ) const {
 	return applicationManage;
 }
-const IClassTypeInfo * AppInstance::appendClassTypeInfoVar( const ClassTypeInfoVar *class_type_info_var, const void *ptr, const std::type_info &class_type_info, const QString &class_type_name ) {
-	auto classTypeInfo = new ClassTypeInfo( class_type_info_var );
-	auto result = classTypeInfoStack->appendClassTypeInfoVar( classTypeInfo, ptr, class_type_info, class_type_name );
-	if( result == classTypeInfo )
-		return classTypeInfo;
-	delete classTypeInfo;
-	return result;
+const IClassTypeInfo * AppInstance::appendClassTypeInfoVar( const ClassTypeInfoVar *class_type_info_var, const void *ptr, const std::type_info &class_type_info, const char *class_type_name ) {
+	return setClassTypeInfo( class_type_info_var, ptr, class_type_info, class_type_name, classTypeInfoStack );
 }
 const IClassTypeInfo * AppInstance::findClassTypeInfo( const void *ptr ) const {
-	return classTypeInfoStack->getClassTypeInfo( ptr );
+	return getClassTypeInfo( ptr, classTypeInfoStack );
 }
 bool AppInstance::removeClassTypeInfoVar( const void *ptr ) {
-	return classTypeInfoStack->removeClassTypeInfo( ptr );
+	return deleteClassTypeInfo( ptr, classTypeInfoStack );
 }
 bool AppInstance::init( ) {
 	Init_Resource_App_Core_Ptr( applicationManage );

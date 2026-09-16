@@ -3,7 +3,7 @@
 
 #define Var_Name_MessageString( _var ) \
 	( MessageString( std::source_location::current( ) ) << "\n\t" << #_var << " = " << _var )
-#define Q_Debug_Var_Nmae_MessageString( _var ) \
+#define Q_Debug_Var_Name_MessageString( _var ) \
 	qDebug( ) << ("------\n" + ( Var_Name_MessageString( _var ).toQString(  ) ) + "\n------").toStdString(  ).c_str(  )
 
 #define QString_MessageString( _var ) \

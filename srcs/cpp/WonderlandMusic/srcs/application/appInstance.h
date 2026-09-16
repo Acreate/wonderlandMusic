@@ -85,7 +85,7 @@ public:
 	virtual AppDateTimerManage * getAppDateTimerManage( ) const;
 
 	virtual ApplicationManage * getApplicationManage( ) const;
-	virtual const IClassTypeInfo * appendClassTypeInfoVar( const ClassTypeInfoVar *class_type_info_var, const void *ptr, const std::type_info &class_type_info, const QString &class_type_name );
+	virtual const IClassTypeInfo * appendClassTypeInfoVar( const ClassTypeInfoVar *class_type_info_var, const void *ptr, const std::type_info &class_type_info, const char *class_type_name );
 	virtual const IClassTypeInfo * findClassTypeInfo( const void *ptr ) const;
 	virtual bool removeClassTypeInfoVar( const void *ptr );
 };

@@ -12,6 +12,7 @@
 #include "../../component/item/impement/progressItem/progressItem.h"
 #include "../../component/item/impement/stringItem/stringItem.h"
 
+#include "../../head/q_debug_message_var_out.h"
 #include "../../head/release_macro.h"
 #include "../../head/result_message_out.h"
 
@@ -126,18 +127,23 @@ void PlayerControlWidget::paintEvent( QPaintEvent *event ) {
 	theNextSong->drawToParintr( painter );
 	playerProgressItem->drawToParintr( painter );
 	userMutex->unlock( );
+	
 }
 void PlayerControlWidget::mouseDoubleClickEvent( QMouseEvent *event ) {
 	QWidget::mouseDoubleClickEvent( event );
+	event->ignore( );
 }
 void PlayerControlWidget::mouseMoveEvent( QMouseEvent *event ) {
 	QWidget::mouseMoveEvent( event );
+	event->ignore( );
 }
 void PlayerControlWidget::mousePressEvent( QMouseEvent *event ) {
 	QWidget::mousePressEvent( event );
+	event->ignore( );
 }
 void PlayerControlWidget::mouseReleaseEvent( QMouseEvent *event ) {
 	QWidget::mouseReleaseEvent( event );
+	event->ignore( );
 }
 
 void PlayerControlWidget::resizeEvent( QResizeEvent *event ) {

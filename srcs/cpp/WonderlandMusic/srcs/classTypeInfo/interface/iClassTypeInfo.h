@@ -45,6 +45,8 @@ public:
 	virtual const ClassTypeInfoVar * getClassTypeInfoVar( ) const;
 	virtual TypeInfoRef * getfristTypeInfoRef( const void *ptr ) const = 0;
 	virtual TypeInfoRef * getfristTypeInfoRef( const void *ptr, const std::type_info &type_info, const QString &name ) const =0;
+	virtual TypeInfoRef * getfristTypeInfoRef( const std::type_info &type_info, const QString &name ) const =0;
+	virtual TypeInfoRef * getfristTypeInfoRef( const std::type_info &type_info ) const =0;
 	virtual TypeInfoRef * getfristTypeInfoRef( const void *ptr, const QString &name ) const =0;
 	virtual TypeInfoRef * getfristTypeInfoRef( const QString &name ) const =0;
 	virtual TypeInfoRef * getfristTypeInfoRef( const void *ptr, const std::type_info &type_info ) const =0;

@@ -39,17 +39,32 @@ TypeInfoRef * ClassTypeInfo::getfristTypeInfoRef( const void *ptr, const std::ty
 	return result;
 }
 TypeInfoRef * ClassTypeInfo::getfristTypeInfoRef( const void *ptr, const QString &name ) const {
+	userMutex->lock( );
 	auto result = UnsafeClassTypeInfo::getfristTypeInfoRef( ptr, name );
 	userMutex->unlock( );
 	return result;
 }
 TypeInfoRef * ClassTypeInfo::getfristTypeInfoRef( const QString &name ) const {
+	userMutex->lock( );
 	auto result = UnsafeClassTypeInfo::getfristTypeInfoRef( name );
 	userMutex->unlock( );
 	return result;
 }
 TypeInfoRef * ClassTypeInfo::getfristTypeInfoRef( const void *ptr, const std::type_info &type_info ) const {
+	userMutex->lock( );
 	auto result = UnsafeClassTypeInfo::getfristTypeInfoRef( ptr, type_info );
+	userMutex->unlock( );
+	return result;
+}
+TypeInfoRef * ClassTypeInfo::getfristTypeInfoRef( const std::type_info &type_info, const QString &name ) const {
+	userMutex->lock( );
+	auto result = UnsafeClassTypeInfo::getfristTypeInfoRef( type_info, name );
+	userMutex->unlock( );
+	return result;
+}
+TypeInfoRef * ClassTypeInfo::getfristTypeInfoRef( const std::type_info &type_info ) const {
+	userMutex->lock( );
+	auto result = UnsafeClassTypeInfo::getfristTypeInfoRef( type_info );
 	userMutex->unlock( );
 	return result;
 }

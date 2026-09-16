@@ -71,6 +71,32 @@ TypeInfoRef * UnsafeClassTypeInfo::getfristTypeInfoRef( const void *ptr, const s
 			return typeInfoArrayPtr[ typeIndex ];
 	return nullptr;
 }
+TypeInfoRef * UnsafeClassTypeInfo::getfristTypeInfoRef( const std::type_info &type_info, const QString &name ) const {
+	size_t infoMaxCout = IClassTypeInfo::getTypeInfoMaxCout( );
+	if( infoMaxCout == 0 )
+		return nullptr;
+	size_t typeIndex = IClassTypeInfo::getTypeInfoCrrentIndex( );
+	if( typeIndex == infoMaxCout )
+		return nullptr;
+	auto typeInfoArrayPtr = IClassTypeInfo::getAliasTypeInfoArrayPtr( );
+	for( ; typeIndex < infoMaxCout; typeIndex += 1 )
+		if( typeInfoArrayPtr[ typeIndex ]->isType( type_info, name ) )
+			return typeInfoArrayPtr[ typeIndex ];
+	return nullptr;
+}
+TypeInfoRef * UnsafeClassTypeInfo::getfristTypeInfoRef( const std::type_info &type_info ) const {
+	size_t infoMaxCout = IClassTypeInfo::getTypeInfoMaxCout( );
+	if( infoMaxCout == 0 )
+		return nullptr;
+	size_t typeIndex = IClassTypeInfo::getTypeInfoCrrentIndex( );
+	if( typeIndex == infoMaxCout )
+		return nullptr;
+	auto typeInfoArrayPtr = IClassTypeInfo::getAliasTypeInfoArrayPtr( );
+	for( ; typeIndex < infoMaxCout; typeIndex += 1 )
+		if( typeInfoArrayPtr[ typeIndex ]->isType( type_info ) )
+			return typeInfoArrayPtr[ typeIndex ];
+	return nullptr;
+}
 bool UnsafeClassTypeInfo::deleteClassTypeInfo( const void *ptr ) {
 	size_t infoMaxCout = IClassTypeInfo::getTypeInfoMaxCout( );
 	if( infoMaxCout == 0 )
