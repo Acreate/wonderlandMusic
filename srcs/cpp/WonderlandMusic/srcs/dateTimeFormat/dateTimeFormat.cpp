@@ -1,31 +1,32 @@
 ﻿#include "dateTimeFormat.h"
 
-#include <QObject>
 #include <qdatetime.h>
 
-#include "../application/appInstance.h"
-#include "../application/appInstance/appDataManage/translate/dateTimeFormatTranslate.h"
+#include <application/appInstance.h>
+#include <application/appInstance/appDataManage/translate/dateTimeFormatTranslate.h>
 
 void DateTimeFormat::fillData( const QChar *source_data, const qsizetype &source_count, QChar *dest_data ) const {
 	qsizetype index = 0;
 	for( ; index < source_count; ++index )
 		dest_data[ index ] = source_data[ index ];
 }
-
-DateTimeFormat::DateTimeFormat( const QDate &current_date, const QTime &current_time ) {
-	currentDate = current_date;
-	currentTime = current_time;
+DateTimeFormat::~DateTimeFormat( ) {
+	delete currentDate;
+	delete currentTime;
 }
 
-DateTimeFormat::DateTimeFormat( const QDateTime &current_date_time ) {
-	currentDate = current_date_time.date( );
-	currentTime = current_date_time.time( );
+DateTimeFormat::DateTimeFormat( const QDate &current_date, const QTime &current_time ) {
+	currentDate = new QDate( current_date );
+	currentTime = new QTime( current_time );
+}
+
+DateTimeFormat::DateTimeFormat( const QDateTime &current_date_time ) : DateTimeFormat( current_date_time.date( ), current_date_time.time( ) ) {
 }
 
 DateTimeFormat::DateTimeFormat( ) {
 	auto current = QDateTime::currentDateTime( );
-	currentDate = current.date( );
-	currentTime = current.time( );
+	currentDate = new QDate( current.date( ) );
+	currentTime = new QTime( current.time( ) );
 }
 
 QString & DateTimeFormat::formatData( QString &result_format, const QDate &format_data ) const {
@@ -191,11 +192,11 @@ QString DateTimeFormat::formatTime( const QTime &format_time ) const {
 }
 
 QString & DateTimeFormat::formatData( QString &result_format ) const {
-	return formatData( result_format, this->currentDate );
+	return formatData( result_format, *this->currentDate );
 }
 
 QString & DateTimeFormat::formatTime( QString &result_format ) const {
-	return formatTime( result_format, this->currentTime );
+	return formatTime( result_format, *this->currentTime );
 }
 
 QString DateTimeFormat::formatData( ) const {
@@ -217,4 +218,28 @@ QString DateTimeFormat::millsecondToHourMinSecFrom( qint64 totalMs ) {
 			.arg( h, 2, 10, QChar( '0' ) )
 			.arg( m, 2, 10, QChar( '0' ) )
 			.arg( s, 2, 10, QChar( '0' ) );
+}
+QString DateTimeFormat::millsecondToHourMinSecFrom( qint64 totalMs, bool remove_zero ) {
+	if( remove_zero == false )
+		return DateTimeFormat::millsecondToHourMinSecFrom( totalMs );
+	qint64 totalSec = totalMs / 1000;
+	qint64 h = totalSec / 3600;
+	qint64 m = ( totalSec % 3600 ) / 60;
+	qint64 s = totalSec % 60;
+	if( h == 0 ) {
+		if( m == 0 )
+			return QString( "%1" ).arg( s, 2, 10, QChar( '0' ) );
+		else
+			return QString( "%1:%2" ).arg( m, 2, 10, QChar( '0' ) ).arg( s, 2, 10, QChar( '0' ) );
+	}
+	return QString( "%1:%2:%3" )
+			.arg( h, 2, 10, QChar( '0' ) )
+			.arg( m, 2, 10, QChar( '0' ) )
+			.arg( s, 2, 10, QChar( '0' ) );
+}
+QString DateTimeFormat::millsecondToHourMinSecFrom( const QTime &totalMs ) {
+	return millsecondToHourMinSecFrom( totalMs.msecsSinceStartOfDay( ) );
+}
+QString DateTimeFormat::millsecondToHourMinSecFrom( const QTime &totalMs, bool remove_zero ) {
+	return millsecondToHourMinSecFrom( totalMs.msecsSinceStartOfDay( ), remove_zero );
 }

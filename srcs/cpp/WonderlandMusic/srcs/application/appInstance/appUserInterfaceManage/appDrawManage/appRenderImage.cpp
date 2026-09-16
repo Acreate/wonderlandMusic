@@ -102,6 +102,7 @@ bool AppRenderImage::renderTxt( QImage &result_render_image, const QString &rend
 	result_render_image = buffImage;
 	return true;
 }
+
 bool AppRenderImage::getTxtSize( QSize &result_txt_size, const QString &render_txt, const QFontMetrics &font_metrics ) const {
 	if( render_txt.isEmpty( ) )
 		return false;

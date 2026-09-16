@@ -11,6 +11,7 @@
 #include "../../component/item/impement/buttonItem/buttonItem.h"
 #include "../../component/item/impement/progressItem/progressItem.h"
 #include "../../component/item/impement/stringItem/stringItem.h"
+#include "../../component/item/impement/timeItem/timeItem.h"
 
 #include "../../head/q_debug_message_var_out.h"
 #include "../../head/release_macro.h"
@@ -77,7 +78,13 @@ bool PlayerControlWidget::updateLayout( ) {
 	offsetX += theNextSong->getGeometry( ).width( ) + itemSpace;
 	// 进度条
 	int width = this->width( );
-	int modWidth = width - offsetX - itemSpace * 2;
+	int modWidth;
+	playerTimeItem->setFontSize( height );
+	playerTimeItem->scaleToImageSize( );
+	modWidth = width - playerTimeItem->getGeometry( ).width( ) - itemSpace * 2;
+	playerTimeItem->moveTo( modWidth, offsetY );
+	modWidth = width - offsetX - itemSpace * 2;
+	height = height / 2;
 	playerProgressItem->setGeometry( offsetX, offsetY, modWidth, height );
 	// 时间
 	userMutex->unlock( );
@@ -125,9 +132,9 @@ void PlayerControlWidget::paintEvent( QPaintEvent *event ) {
 	play->drawToParintr( painter );
 	theNextStep->drawToParintr( painter );
 	theNextSong->drawToParintr( painter );
-	playerProgressItem->drawToParintr( painter );
+	//playerProgressItem->drawToParintr( painter );
+	playerTimeItem->drawToParintr( painter );
 	userMutex->unlock( );
-	
 }
 void PlayerControlWidget::mouseDoubleClickEvent( QMouseEvent *event ) {
 	QWidget::mouseDoubleClickEvent( event );
@@ -162,6 +169,7 @@ bool PlayerControlWidget::initBefore( ) {
 	pause = new ButtonItem( ButtonItem::Type::Ico );
 	termination = new ButtonItem( ButtonItem::Type::Ico );
 	playerProgressItem = new ProgressItem;
+	playerTimeItem = new TimeItem;
 	return true;
 }
 bool PlayerControlWidget::init( ) {

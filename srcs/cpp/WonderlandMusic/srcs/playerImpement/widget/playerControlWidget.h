@@ -6,6 +6,7 @@
 
 #include "../../interface/iAppResourceCore.h"
 
+class TimeItem;
 class StringItem;
 class ProgressItem;
 class ButtonItem;
@@ -22,7 +23,7 @@ private:
 	ButtonItem *pause = nullptr;
 	ButtonItem *termination = nullptr;
 	ProgressItem *playerProgressItem = nullptr;
-	StringItem *playerTimeItem = nullptr;
+	TimeItem *playerTimeItem = nullptr;
 	UserMutex *userMutex = nullptr;
 	IPlayerWindowCentreWidget *playerWindowCentreWidget = nullptr;
 
