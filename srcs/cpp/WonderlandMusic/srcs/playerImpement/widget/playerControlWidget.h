@@ -6,6 +6,7 @@
 
 #include "../../interface/iAppResourceCore.h"
 
+class IItemDraw;
 class TimeItem;
 class StringItem;
 class ProgressItem;
@@ -24,6 +25,7 @@ private:
 	ButtonItem *termination = nullptr;
 	ProgressItem *playerProgressItem = nullptr;
 	TimeItem *playerTimeItem = nullptr;
+	IItemDraw *clickItem = nullptr;
 	UserMutex *userMutex = nullptr;
 	IPlayerWindowCentreWidget *playerWindowCentreWidget = nullptr;
 
@@ -52,6 +54,7 @@ public:
 	bool initBefore( ) override;
 	bool init( ) override;
 	bool initAfter( ) override;
+	virtual IItemDraw * getPos( const QPoint &pos ) const;
 };
 
 #endif // PLAYERCONTROLWIDGET_H_H_HEAD__FILE__

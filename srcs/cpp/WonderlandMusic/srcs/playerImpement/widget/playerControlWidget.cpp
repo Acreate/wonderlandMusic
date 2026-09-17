@@ -12,6 +12,7 @@
 #include "../../component/item/impement/progressItem/progressItem.h"
 #include "../../component/item/impement/timeItem/timeItem.h"
 
+#include "../../head/q_debug_message_var_out.h"
 #include "../../head/release_macro.h"
 #include "../../head/result_message_out.h"
 
@@ -92,15 +93,19 @@ bool PlayerControlWidget::updateLayout( ) {
 	return true;
 }
 bool PlayerControlWidget::player( const QString &music_file_path ) {
+	Q_Debug_MessageString( __func__ );
 	return false;
 }
 bool PlayerControlWidget::stop( ) {
+	Q_Debug_MessageString( __func__ );
 	return false;
 }
 bool PlayerControlWidget::terminate( ) {
+	Q_Debug_MessageString( __func__ );
 	return false;
 }
 bool PlayerControlWidget::setPlayerTime( const int64_t &player_mill_second_time ) {
+	Q_Debug_MessageString( __func__ );
 	return false;
 }
 bool PlayerControlWidget::deleteResource( ) {
@@ -109,6 +114,7 @@ bool PlayerControlWidget::deleteResource( ) {
 	setPlayerWindowCentre( nullptr );
 
 	userMutex->lock( );
+	clickItem = nullptr;
 	Delete_Resource_App_Core_Ptr( thePreviousSong );
 	Delete_Resource_App_Core_Ptr( theNextSong );
 	Delete_Resource_App_Core_Ptr( theNextStep );
@@ -147,10 +153,31 @@ void PlayerControlWidget::mouseMoveEvent( QMouseEvent *event ) {
 void PlayerControlWidget::mousePressEvent( QMouseEvent *event ) {
 	QWidget::mousePressEvent( event );
 	event->ignore( );
+	clickItem = getPos( event->pos( ) );
 }
 void PlayerControlWidget::mouseReleaseEvent( QMouseEvent *event ) {
 	QWidget::mouseReleaseEvent( event );
 	event->ignore( );
+	if( userMutex == nullptr || clickItem == nullptr )
+		return;
+	auto itemDraw = getPos( event->pos( ) );
+	userMutex->lock( );
+	if( clickItem == itemDraw ) {
+		if( clickItem == play )
+			PlayerControlWidget::player( "" );
+		else if( clickItem == thePreviousSong ) {
+		} else if( clickItem == theNextSong ) {
+		} else if( clickItem == thePreviousStep ) {
+		} else if( clickItem == theNextStep ) {
+		} else if( clickItem == pause ) {
+			PlayerControlWidget::stop( );
+		} else if( clickItem == termination ) {
+			PlayerControlWidget::terminate( );
+		} else if( clickItem == playerProgressItem ) {
+		}
+	}
+	clickItem = nullptr;
+	userMutex->unlock( );
 }
 
 void PlayerControlWidget::resizeEvent( QResizeEvent *event ) {
@@ -189,4 +216,28 @@ bool PlayerControlWidget::initAfter( ) {
 	load_button_png_resource( pause, "/png/停止.png", tr( "资源加载失败" ) );
 	load_button_png_resource( termination, "/png/终止.png", tr( "资源加载失败" ) );
 	return true;
+}
+IItemDraw * PlayerControlWidget::getPos( const QPoint &pos ) const {
+	IItemDraw *result = nullptr;
+	if( userMutex == nullptr )
+		return result;
+	userMutex->lock( );
+	#define set_clik( _result , _check, pos ) \
+		if(_check->isClick( pos )) { \
+			_result = _check; \
+			break; \
+		}
+	do {
+		set_clik( result, thePreviousSong, pos );
+		set_clik( result, theNextSong, pos );
+		set_clik( result, thePreviousStep, pos );
+		set_clik( result, theNextStep, pos );
+		set_clik( result, play, pos );
+		set_clik( result, pause, pos );
+		set_clik( result, termination, pos );
+		set_clik( result, playerProgressItem, pos );
+	} while( false );
+
+	userMutex->unlock( );
+	return result;
 }
