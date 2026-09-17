@@ -1,7 +1,6 @@
 ﻿#ifndef TEMPLATEARGS_H_H_HEAD__FILE__
 #define TEMPLATEARGS_H_H_HEAD__FILE__
 #include <QString>
-#include <string>
 #include <utility>
 #include <typeinfo>
 
@@ -37,7 +36,7 @@ namespace classTypeTools {
 		/// @param class_type_info 设置的类型
 		/// @param class_type_name 设置的名称
 		/// @return 设置指针指向对象信息。失败返回 nullptr
-		const IClassTypeInfo * setClassTypeInfo( const void *class_ptr, const std::type_info &class_type_info, const char *class_type_name );
+		const IClassTypeInfo * setClassTypeInfo( void *class_ptr, const std::type_info &class_type_info, const char *class_type_name );
 		/// @brief 获取指针匹配的对象信息
 		/// @param ty 匹配指针
 		/// @return 失败返回 nullptr
@@ -53,6 +52,17 @@ namespace classTypeTools {
 		/// @param class_type_name 对象类型
 		/// @return 不匹配返回 false
 		bool isType( const void *ptr, const std::type_info &ptr_type, const char *class_type_name );
+		/// @brief 从子类到父类关系指针对象中的任意一指向获取匹配类型的指针
+		/// @param ptr 关系指针对象指针
+		/// @param ptr_type 关系类型
+		/// @param class_type_name 关系类型名称
+		/// @return 失败返回 nullptr
+		void * getTypePtr( const void *ptr, const std::type_info &ptr_type, const char *class_type_name );
+		/// @brief 从子类到父类关系指针对象中的任意一指向获取匹配类型的指针
+		/// @param ptr 关系指针对象指针
+		/// @param ptr_type 关系类型
+		/// @return 失败返回 nullptr
+		void * getTypePtr( const void *ptr, const std::type_info &ptr_type );
 
 		/// @brief 获取指针指向对象的名称
 		/// @param ty 匹配指针
@@ -101,6 +111,19 @@ namespace classTypeTools {
 		/// @param class_type_info_stack 参考信息堆栈
 		/// @return 不匹配返回 false
 		bool isType( const void *ptr, const std::type_info &ptr_type, const char *class_type_name, ClassTypeInfoStack *class_type_info_stack );
+		/// @brief 从子类到父类关系指针对象中的任意一指向获取匹配类型的指针
+		/// @param ptr 关系指针对象指针
+		/// @param ptr_type 关系类型
+		/// @param class_type_name 关系类型名称
+		/// @param class_type_info_stack 参考信息堆栈
+		/// @return 失败返回 nullptr
+		void * getTypePtr( const void *ptr, const std::type_info &ptr_type, const char *class_type_name, ClassTypeInfoStack *class_type_info_stack );
+		/// @brief 从子类到父类关系指针对象中的任意一指向获取匹配类型的指针
+		/// @param ptr 关系指针对象指针
+		/// @param ptr_type 关系类型
+		/// @param class_type_info_stack 参考信息堆栈
+		/// @return 失败返回 nullptr
+		void * getTypePtr( const void *ptr, const std::type_info &ptr_type, ClassTypeInfoStack *class_type_info_stack );
 	}
 
 	/// @brief 剥离类型描述符
@@ -240,9 +263,10 @@ namespace classTypeTools {
 	/// @return 失败返回 nullptr
 	template< typename target_type, typename type >
 	target_type * cast_type( type *ptr ) {
-		if( classTypeTools::isType< target_type >( ptr ) == false )
+		auto typePtr = entityTools::getTypePtr( ptr, typeid( target_type ) );
+		if( typePtr == nullptr )
 			return nullptr;
-		return static_cast< target_type * >( ptr );
+		return static_cast< target_type * >( typePtr );
 	}
 
 	/// @brief 转换指针到匹配类型
@@ -252,9 +276,10 @@ namespace classTypeTools {
 	/// @return 失败返回 nullptr
 	template< typename target_type, typename type >
 	const target_type * cast_type( const type *ptr ) {
-		if( classTypeTools::isType< target_type >( ptr ) == false )
+		auto typePtr = entityTools::getTypePtr( ptr, typeid( target_type ) );
+		if( typePtr == nullptr )
 			return nullptr;
-		return static_cast< const target_type * >( ptr );
+		return static_cast< const target_type * >( typePtr );
 	}
 	/// @brief 获取匹配的指针对象类型名称
 	/// @tparam type 类型
@@ -291,9 +316,10 @@ namespace classTypeTools {
 	/// @return 失败返回 nullptr
 	template< typename target_type, typename type >
 	target_type * cast_type( type *ptr, ClassTypeInfoStack *class_type_info_stack ) {
-		if( classTypeTools::isType< target_type >( ptr, class_type_info_stack ) == false )
+		auto typePtr = entityTools::getTypePtr( ptr, typeid( target_type ), class_type_info_stack );
+		if( typePtr == nullptr )
 			return nullptr;
-		return static_cast< target_type * >( ptr );
+		return static_cast< target_type * >( typePtr );
 	}
 
 	/// @brief 转换指针到匹配类型

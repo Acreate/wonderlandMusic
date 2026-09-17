@@ -10,7 +10,7 @@ class ClassTypeInfoStack : public UnsafeClassTypeInfoStack {
 public:
 	ClassTypeInfoStack( );
 	~ClassTypeInfoStack( ) override;
-	const IClassTypeInfo * appendClassTypeInfoVar( IClassTypeInfo *class_type_info_ptr, const void *ptr, const std::type_info &class_type_info, const QString &class_type_name ) override;
+	const IClassTypeInfo * appendClassTypeInfoVar( IClassTypeInfo *class_type_info_ptr, void *ptr, const std::type_info &class_type_info, const QString &class_type_name ) override;
 	const IClassTypeInfo * getClassTypeInfo( const void *ptr ) const override;
 	bool removeClassTypeInfo( const void *ptr ) override;
 	void clear( ) override;

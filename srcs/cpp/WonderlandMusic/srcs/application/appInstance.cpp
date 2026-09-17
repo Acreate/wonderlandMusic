@@ -108,7 +108,7 @@ AppDateTimerManage * AppInstance::getAppDateTimerManage( ) const {
 ApplicationManage * AppInstance::getApplicationManage( ) const {
 	return applicationManage;
 }
-const IClassTypeInfo * AppInstance::appendClassTypeInfoVar( const ClassTypeInfoVar *class_type_info_var, const void *ptr, const std::type_info &class_type_info, const char *class_type_name ) {
+const IClassTypeInfo * AppInstance::appendClassTypeInfoVar( const ClassTypeInfoVar *class_type_info_var, void *ptr, const std::type_info &class_type_info, const char *class_type_name ) {
 	return setClassTypeInfo( class_type_info_var, ptr, class_type_info, class_type_name, classTypeInfoStack );
 }
 const IClassTypeInfo * AppInstance::findClassTypeInfo( const void *ptr ) const {

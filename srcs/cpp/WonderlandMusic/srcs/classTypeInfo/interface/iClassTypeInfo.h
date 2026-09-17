@@ -32,7 +32,7 @@ protected:
 	virtual ArrayType getAliasTypeInfoArrayPtr( ) const;
 
 	virtual void deleteArrayClassTypeInfo( );
-	virtual TypeInfoRef * createClassTypeInfo( const IClassTypeInfo *class_type_info, const void *ptr, const std::type_info &type_info, const QString &name );
+	virtual TypeInfoRef * createClassTypeInfo( const IClassTypeInfo *class_type_info, void *ptr, const std::type_info &type_info, const QString &name );
 	virtual bool deleteTargetClassTypeInfoPtr( TypeInfoRef *&delete_type_info_ref );
 
 	virtual TypeInfoRef * appendClassTypeInfo( TypeInfoRef *type_info_ref );
@@ -53,7 +53,7 @@ public:
 	virtual TypeInfoRef * getEntityTypeInfoRef( ) const;
 	virtual bool getAllTypeInfoRefArray( TypeInfoRef **&result_arry_ptr, size_t &result_array_count ) const;
 	virtual bool deleteClassTypeInfo( const void *p ) = 0;
-	virtual TypeInfoRef * appendClassTypeInfo( const ClassTypeInfoVar *class_type_info_var, const void *ptr, const std::type_info &type_info, const QString &name ) = 0;
+	virtual TypeInfoRef * appendClassTypeInfo( const ClassTypeInfoVar *class_type_info_var, void *ptr, const std::type_info &type_info, const QString &name ) = 0;
 	virtual bool getClassNameVector( std::vector< QString > &result_name ) const;
 };
 

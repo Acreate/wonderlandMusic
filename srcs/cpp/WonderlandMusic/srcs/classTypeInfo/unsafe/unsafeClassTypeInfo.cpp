@@ -119,7 +119,7 @@ bool UnsafeClassTypeInfo::deleteClassTypeInfo( const void *ptr ) {
 	return true;
 }
 
-TypeInfoRef * UnsafeClassTypeInfo::appendClassTypeInfo( const ClassTypeInfoVar *class_type_info_var, const void *ptr, const std::type_info &type_info, const QString &name ) {
+TypeInfoRef * UnsafeClassTypeInfo::appendClassTypeInfo( const ClassTypeInfoVar *class_type_info_var, void *ptr, const std::type_info &type_info, const QString &name ) {
 	// 并非本子类
 	if( class_type_info_var != UnsafeClassTypeInfo::getClassTypeInfoVar( ) )
 		return nullptr;

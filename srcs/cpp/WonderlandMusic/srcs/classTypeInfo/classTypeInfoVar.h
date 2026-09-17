@@ -14,10 +14,10 @@ protected:
 
 protected:
 	virtual const IClassTypeInfo * getClassTypeInfo( const void *class_ptr ) const;
-	virtual const IClassTypeInfo * setClassTypeInfo( const ClassTypeInfoVar *class_ptr, const void *ptr, const std::type_info &class_type_info, const char *class_type_name );
+	virtual const IClassTypeInfo * setClassTypeInfo( const ClassTypeInfoVar *class_ptr, void *ptr, const std::type_info &class_type_info, const char *class_type_name );
 	virtual bool deleteClassTypeInfo( const void *class_ptr );
 	virtual const IClassTypeInfo * getClassTypeInfo( const void *class_ptr, ClassTypeInfoStack *class_type_info_stack ) const;
-	virtual const IClassTypeInfo * setClassTypeInfo( const ClassTypeInfoVar *class_ptr, const void *ptr, const std::type_info &class_type_info, const char *class_type_name, ClassTypeInfoStack *class_type_info_stack );
+	virtual const IClassTypeInfo * setClassTypeInfo( const ClassTypeInfoVar *class_ptr, void *ptr, const std::type_info &class_type_info, const char *class_type_name, ClassTypeInfoStack *class_type_info_stack );
 	virtual bool deleteClassTypeInfo( const void *class_ptr, ClassTypeInfoStack *class_type_info_stack );
 
 	/// @brief 注册一个类型对象

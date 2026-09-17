@@ -108,7 +108,7 @@ void IClassTypeInfo::deleteArrayClassTypeInfo( ) {
 	typeInfoCrrentCout = 0;
 	typeInfoMaxCout = 0;
 }
-TypeInfoRef * IClassTypeInfo::createClassTypeInfo( const IClassTypeInfo *class_type_info, const void *ptr, const std::type_info &type_info, const QString &name ) {
+TypeInfoRef * IClassTypeInfo::createClassTypeInfo( const IClassTypeInfo *class_type_info, void *ptr, const std::type_info &type_info, const QString &name ) {
 	return new TypeInfoRef( class_type_info, ptr, type_info, name );
 }
 bool IClassTypeInfo::deleteTargetClassTypeInfoPtr( TypeInfoRef *&delete_type_info_ref ) {

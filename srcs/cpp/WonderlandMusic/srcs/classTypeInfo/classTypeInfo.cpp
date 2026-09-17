@@ -14,7 +14,7 @@ const ClassTypeInfoVar * ClassTypeInfo::getClassTypeInfoVar( ) const {
 	userMutex->unlock( );
 	return result;
 }
-TypeInfoRef * ClassTypeInfo::appendClassTypeInfo( const ClassTypeInfoVar *class_type_info_var, const void *ptr, const std::type_info &type_info, const QString &name ) {
+TypeInfoRef * ClassTypeInfo::appendClassTypeInfo( const ClassTypeInfoVar *class_type_info_var, void *ptr, const std::type_info &type_info, const QString &name ) {
 	userMutex->lock( );
 	auto result = UnsafeClassTypeInfo::appendClassTypeInfo( class_type_info_var, ptr, type_info, name );
 	userMutex->unlock( );

@@ -31,7 +31,7 @@ bool classTypeTools::entityTools::deleteClassTypeInfo( const void *ptr ) {
 		return false;
 	return appInstance->removeClassTypeInfoVar( ptr );
 }
-const IClassTypeInfo * classTypeTools::entityTools::setClassTypeInfo( const void *class_ptr, const std::type_info &class_type_info, const char *class_type_name ) {
+const IClassTypeInfo * classTypeTools::entityTools::setClassTypeInfo( void *class_ptr, const std::type_info &class_type_info, const char *class_type_name ) {
 	auto appInstance = InstanceTools::getAppInstance( );
 	if( appInstance == nullptr )
 		return nullptr;
@@ -55,6 +55,24 @@ bool classTypeTools::entityTools::isType( const void *ptr, const std::type_info 
 	if( typeInfoRef == nullptr )
 		return false;
 	return true;
+}
+void * classTypeTools::entityTools::getTypePtr( const void *ptr, const std::type_info &ptr_type, const char *class_type_name ) {
+	auto classTypeInfo = entityTools::getClassTypeInfo( ptr );
+	if( classTypeInfo == nullptr )
+		return nullptr;
+	auto getfristTypeInfoRef = classTypeInfo->getfristTypeInfoRef( ptr_type, class_type_name );
+	if( getfristTypeInfoRef == nullptr )
+		return nullptr;
+	return getfristTypeInfoRef->getPtr( );
+}
+void * classTypeTools::entityTools::getTypePtr( const void *ptr, const std::type_info &ptr_type ) {
+	auto classTypeInfo = entityTools::getClassTypeInfo( ptr );
+	if( classTypeInfo == nullptr )
+		return nullptr;
+	auto getfristTypeInfoRef = classTypeInfo->getfristTypeInfoRef( ptr_type );
+	if( getfristTypeInfoRef == nullptr )
+		return nullptr;
+	return getfristTypeInfoRef->getPtr( );
 }
 bool classTypeTools::entityTools::isType( const void *ptr, const std::type_info &ptr_type, const char *class_type_name ) {
 	auto classTypeInfo = entityTools::getClassTypeInfo( ptr );
@@ -113,4 +131,22 @@ bool classTypeTools::entityTools::isType( const void *ptr, const std::type_info 
 	if( typeInfoRef == nullptr )
 		return false;
 	return true;
+}
+void * classTypeTools::entityTools::getTypePtr( const void *ptr, const std::type_info &ptr_type, const char *class_type_name, ClassTypeInfoStack *class_type_info_stack ) {
+	auto classTypeInfo = class_type_info_stack->getClassTypeInfo( ptr );
+	if( classTypeInfo == nullptr )
+		return nullptr;
+	auto typeInfoRef = classTypeInfo->getfristTypeInfoRef( ptr_type, class_type_name );
+	if( typeInfoRef == nullptr )
+		return nullptr;
+	return typeInfoRef->getPtr( );
+}
+void * classTypeTools::entityTools::getTypePtr( const void *ptr, const std::type_info &ptr_type, ClassTypeInfoStack *class_type_info_stack ) {
+	auto classTypeInfo = class_type_info_stack->getClassTypeInfo( ptr );
+	if( classTypeInfo == nullptr )
+		return nullptr;
+	auto typeInfoRef = classTypeInfo->getfristTypeInfoRef( ptr_type );
+	if( typeInfoRef == nullptr )
+		return nullptr;
+	return typeInfoRef->getPtr( );
 }

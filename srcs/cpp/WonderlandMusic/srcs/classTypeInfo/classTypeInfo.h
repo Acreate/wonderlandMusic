@@ -16,7 +16,7 @@ public:
 	~ClassTypeInfo( ) override;
 	const ClassTypeInfoVar * getClassTypeInfoVar( ) const override;
 
-	TypeInfoRef * appendClassTypeInfo( const ClassTypeInfoVar *class_type_info_var, const void *ptr, const std::type_info &type_info, const QString &name ) override;
+	TypeInfoRef * appendClassTypeInfo( const ClassTypeInfoVar *class_type_info_var, void *ptr, const std::type_info &type_info, const QString &name ) override;
 	bool deleteClassTypeInfo( const void *p ) override;
 	TypeInfoRef * getfristTypeInfoRef( const void *ptr ) const override;
 	TypeInfoRef * getfristTypeInfoRef( const void *ptr, const std::type_info &type_info, const QString &name ) const override;

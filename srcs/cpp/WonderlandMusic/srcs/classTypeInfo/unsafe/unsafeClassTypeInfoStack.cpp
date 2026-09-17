@@ -1,7 +1,6 @@
 ﻿#include "unsafeClassTypeInfoStack.h"
 
 #include "../interface/iClassTypeInfo.h"
-#include <qdebug.h>
 
 #include "../typeInfoRef.h"
 
@@ -33,7 +32,7 @@ UnsafeClassTypeInfoStack::UnsafeClassTypeInfoStack( ) {
 UnsafeClassTypeInfoStack::~UnsafeClassTypeInfoStack( ) {
 	UnsafeClassTypeInfoStack::clear( );
 }
-const IClassTypeInfo * UnsafeClassTypeInfoStack::appendClassTypeInfoVar( IClassTypeInfo *class_type_info_ptr, const void *ptr, const std::type_info &class_type_info, const QString &class_type_name ) {
+const IClassTypeInfo * UnsafeClassTypeInfoStack::appendClassTypeInfoVar( IClassTypeInfo *class_type_info_ptr, void *ptr, const std::type_info &class_type_info, const QString &class_type_name ) {
 	size_t index;
 	IClassTypeInfo *result;
 	if( UnsafeClassTypeInfoStack::fromClassTypeInfoVarGetClassTypeInfo( index, result, class_type_info_ptr ) ) {

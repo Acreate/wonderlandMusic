@@ -10,20 +10,20 @@ class TypeInfoRef {
 	QString *name;
 	const IClassTypeInfo *classTypeInfo;
 	const type_info &typeInfo;
-	const void *ptr = nullptr;
+	void *ptr = nullptr;
 
 protected:
 	virtual ~TypeInfoRef( );
-	TypeInfoRef( const IClassTypeInfo *class_type_info, const void *ptr, const std::type_info &type_info, const QString *const name );
-	TypeInfoRef( const IClassTypeInfo *class_type_info, const void *ptr, const std::type_info &type_info );
-	TypeInfoRef( const IClassTypeInfo *class_type_info, const void *ptr, const std::type_info &type_info, const QString &name );
+	TypeInfoRef( const IClassTypeInfo *class_type_info, void *ptr, const std::type_info &type_info, const QString *const name );
+	TypeInfoRef( const IClassTypeInfo *class_type_info, void *ptr, const std::type_info &type_info );
+	TypeInfoRef( const IClassTypeInfo *class_type_info, void *ptr, const std::type_info &type_info, const QString &name );
 
 public:
 	friend bool operator==( const TypeInfoRef &lhs, const TypeInfoRef &rhs );
 	friend bool operator!=( const TypeInfoRef &lhs, const TypeInfoRef &rhs );
 	virtual const QString & getName( ) const;
 	virtual const std::type_info & getTypeInfo( ) const;
-	virtual const void * getPtr( ) const;
+	virtual void * getPtr( ) const;
 	virtual const IClassTypeInfo * getClassTypeInfo( ) const;
 	virtual bool isType( const void *ptr, const std::type_info &type_info, const QString &name ) const;
 	virtual bool isType( const std::type_info &type_info, const QString &name ) const;

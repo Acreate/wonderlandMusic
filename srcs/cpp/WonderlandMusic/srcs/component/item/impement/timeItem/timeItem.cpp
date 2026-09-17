@@ -12,6 +12,7 @@
 #include <tools/instanceTools.h>
 
 bool TimeItem::rePaintBuff( ) {
+	
 	if( TimeItem::time == nullptr || TimeItem::font == nullptr )
 		return false;
 

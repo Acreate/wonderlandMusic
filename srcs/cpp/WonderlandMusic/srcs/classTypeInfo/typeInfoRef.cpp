@@ -4,7 +4,7 @@
 #include <QString>
 #include <typeinfo>
 
-TypeInfoRef::TypeInfoRef( const IClassTypeInfo *class_type_info, const void *ptr, const std::type_info &type_info, const QString *const name ) : classTypeInfo( class_type_info ), name( new QString( *name ) ),
+TypeInfoRef::TypeInfoRef( const IClassTypeInfo *class_type_info, void *ptr, const std::type_info &type_info, const QString *const name ) : classTypeInfo( class_type_info ), name( new QString( *name ) ),
 	typeInfo( type_info ),
 	ptr( ptr ) {
 	auto stringList = name->split( " " );
@@ -12,9 +12,9 @@ TypeInfoRef::TypeInfoRef( const IClassTypeInfo *class_type_info, const void *ptr
 	auto pointer = stringList.data( );
 	*this->name = pointer[ count ];
 }
-TypeInfoRef::TypeInfoRef( const IClassTypeInfo *class_type_info, const void *ptr, const std::type_info &type_info ) : TypeInfoRef( class_type_info, ptr, type_info, typeInfo.name( ) ) {
+TypeInfoRef::TypeInfoRef( const IClassTypeInfo *class_type_info, void *ptr, const std::type_info &type_info ) : TypeInfoRef( class_type_info, ptr, type_info, typeInfo.name( ) ) {
 }
-TypeInfoRef::TypeInfoRef( const IClassTypeInfo *class_type_info, const void *ptr, const std::type_info &type_info, const QString &name ) : TypeInfoRef( class_type_info, ptr, type_info, &name ) {
+TypeInfoRef::TypeInfoRef( const IClassTypeInfo *class_type_info, void *ptr, const std::type_info &type_info, const QString &name ) : TypeInfoRef( class_type_info, ptr, type_info, &name ) {
 }
 const QString & TypeInfoRef::getName( ) const {
 	return *name;
@@ -22,7 +22,7 @@ const QString & TypeInfoRef::getName( ) const {
 const std::type_info & TypeInfoRef::getTypeInfo( ) const {
 	return typeInfo;
 }
-const void * TypeInfoRef::getPtr( ) const {
+void * TypeInfoRef::getPtr( ) const {
 	return ptr;
 }
 const IClassTypeInfo * TypeInfoRef::getClassTypeInfo( ) const {

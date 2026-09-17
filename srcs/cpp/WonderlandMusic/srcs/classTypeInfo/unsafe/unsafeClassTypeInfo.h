@@ -22,7 +22,7 @@ public:
 	TypeInfoRef * getfristTypeInfoRef( const std::type_info &type_info, const QString &name ) const override;
 	TypeInfoRef * getfristTypeInfoRef( const std::type_info &type_info ) const override;
 	bool deleteClassTypeInfo( const void *p ) override;
-	TypeInfoRef * appendClassTypeInfo( const ClassTypeInfoVar *class_type_info_var, const void *ptr, const std::type_info &type_info, const QString &name ) override;
+	TypeInfoRef * appendClassTypeInfo( const ClassTypeInfoVar *class_type_info_var, void *ptr, const std::type_info &type_info, const QString &name ) override;
 };
 
 #endif // UNSAFCECLASSTYPEINFO_H_H_HEAD__FILE__
