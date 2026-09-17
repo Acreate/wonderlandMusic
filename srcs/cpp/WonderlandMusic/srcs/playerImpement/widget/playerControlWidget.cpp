@@ -160,9 +160,8 @@ void PlayerControlWidget::mouseReleaseEvent( QMouseEvent *event ) {
 	event->ignore( );
 	if( userMutex == nullptr || clickItem == nullptr )
 		return;
-	auto itemDraw = getPos( event->pos( ) );
 	userMutex->lock( );
-	if( clickItem == itemDraw ) {
+	if( clickItem->isClick( event->pos( ) ) ) {
 		if( clickItem == play )
 			PlayerControlWidget::player( "" );
 		else if( clickItem == thePreviousSong ) {
