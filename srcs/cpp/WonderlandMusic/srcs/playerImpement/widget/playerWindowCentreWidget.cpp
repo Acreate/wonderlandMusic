@@ -90,42 +90,42 @@ IPlayerControlWidget * PlayerWindowCentreWidget::getPlayerControlWidget( ) const
 	return playerControlWidget;
 }
 bool PlayerWindowCentreWidget::currentMusicItemPlayer( ) {
-	if( playerControlWidget )
+	if( playerControlWidget == nullptr )
 		return false;
 	return playerControlWidget->currentMusicItemPlayer( );
 }
 bool PlayerWindowCentreWidget::currentMusicItemPreviousSong( ) {
-	if( playerControlWidget )
+	if( playerControlWidget == nullptr )
 		return false;
 	return playerControlWidget->currentMusicItemPreviousSong( );
 }
 bool PlayerWindowCentreWidget::currentMusicItemNextSong( ) {
-	if( playerControlWidget )
+	if( playerControlWidget == nullptr )
 		return false;
 	return playerControlWidget->currentMusicItemNextSong( );
 }
 bool PlayerWindowCentreWidget::currentMusicItemPreviousStep( ) {
-	if( playerControlWidget )
+	if( playerControlWidget == nullptr )
 		return false;
 	return playerControlWidget->currentMusicItemPreviousStep( );
 }
 bool PlayerWindowCentreWidget::currentMusicItemNextStep( ) {
-	if( playerControlWidget )
+	if( playerControlWidget == nullptr )
 		return false;
 	return playerControlWidget->currentMusicItemNextStep( );
 }
 bool PlayerWindowCentreWidget::currentMusicItemPause( ) {
-	if( playerControlWidget )
+	if( playerControlWidget == nullptr )
 		return false;
 	return playerControlWidget->currentMusicItemPause( );
 }
 bool PlayerWindowCentreWidget::currentMusicItemTerminate( ) {
-	if( playerControlWidget )
+	if( playerControlWidget == nullptr )
 		return false;
 	return playerControlWidget->currentMusicItemTerminate( );
 }
 bool PlayerWindowCentreWidget::currentMusicItemSetPlayerTime( const long double percentage ) {
-	if( playerControlWidget )
+	if( playerControlWidget == nullptr )
 		return false;
 	return playerControlWidget->currentMusicItemSetPlayerTime( percentage );
 }
