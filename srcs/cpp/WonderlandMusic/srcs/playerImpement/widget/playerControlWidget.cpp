@@ -7,12 +7,12 @@
 #include <component/playWindow/interface/widget/iPlayerWindowCentreWidget.h>
 
 #include "../../application/appInstance/appDataManage.h"
+#include "../../application/appInstance/appDataManage/appMusicManage.h"
 
 #include "../../component/item/impement/buttonItem/buttonItem.h"
 #include "../../component/item/impement/progressItem/progressItem.h"
 #include "../../component/item/impement/timeItem/timeItem.h"
 
-#include "../../head/q_debug_message_var_out.h"
 #include "../../head/release_macro.h"
 #include "../../head/result_message_out.h"
 
@@ -92,21 +92,54 @@ bool PlayerControlWidget::updateLayout( ) {
 	repaint( );
 	return true;
 }
-bool PlayerControlWidget::player( const QString &music_file_path ) {
-	Q_Debug_MessageString( __func__ );
-	return false;
+bool PlayerControlWidget::currentMusicItemPlayer( ) {
+	auto appMusicManage = InstanceTools::getAppMusicManage( );
+	if( appMusicManage == nullptr )
+		return false;
+	return appMusicManage->currentMusicItemPlayer( ) != nullptr;
 }
-bool PlayerControlWidget::stop( ) {
-	Q_Debug_MessageString( __func__ );
-	return false;
+bool PlayerControlWidget::currentMusicItemPreviousSong( ) {
+	auto appMusicManage = InstanceTools::getAppMusicManage( );
+	if( appMusicManage == nullptr )
+		return false;
+	return appMusicManage->currentMusicItemPreviousSong( ) != nullptr;
 }
-bool PlayerControlWidget::terminate( ) {
-	Q_Debug_MessageString( __func__ );
-	return false;
+bool PlayerControlWidget::currentMusicItemNextSong( ) {
+	auto appMusicManage = InstanceTools::getAppMusicManage( );
+	if( appMusicManage == nullptr )
+		return false;
+	return appMusicManage->currentMusicItemNextSong( ) != nullptr;
 }
-bool PlayerControlWidget::setPlayerTime( const int64_t &player_mill_second_time ) {
-	Q_Debug_MessageString( __func__ );
-	return false;
+bool PlayerControlWidget::currentMusicItemPreviousStep( ) {
+	auto appMusicManage = InstanceTools::getAppMusicManage( );
+	if( appMusicManage == nullptr )
+		return false;
+	return appMusicManage->currentMusicItemPreviousStep( ) != nullptr;
+}
+bool PlayerControlWidget::currentMusicItemNextStep( ) {
+	auto appMusicManage = InstanceTools::getAppMusicManage( );
+	if( appMusicManage == nullptr )
+		return false;
+	return appMusicManage->currentMusicItemNextStep( ) != nullptr;
+}
+bool PlayerControlWidget::currentMusicItemPause( ) {
+	auto appMusicManage = InstanceTools::getAppMusicManage( );
+	if( appMusicManage == nullptr )
+		return false;
+	return appMusicManage->currentMusicItemPause( ) != nullptr;
+}
+bool PlayerControlWidget::currentMusicItemTerminate( ) {
+	auto appMusicManage = InstanceTools::getAppMusicManage( );
+	if( appMusicManage == nullptr )
+		return false;
+	return appMusicManage->currentMusicItemTerminate( ) != nullptr;
+}
+
+bool PlayerControlWidget::currentMusicItemSetPlayerTime( const long double &player_mill_second_time ) {
+	auto appMusicManage = InstanceTools::getAppMusicManage( );
+	if( appMusicManage == nullptr )
+		return false;
+	return appMusicManage->currentMusicItemSetPlayerTime( player_mill_second_time ) != nullptr;
 }
 bool PlayerControlWidget::deleteResource( ) {
 	if( userMutex == nullptr )
@@ -160,23 +193,39 @@ void PlayerControlWidget::mouseReleaseEvent( QMouseEvent *event ) {
 	event->ignore( );
 	if( userMutex == nullptr || clickItem == nullptr )
 		return;
+	auto point = event->pos( );
+	int x = point.x( );
+	bool isUpdate = false;
 	userMutex->lock( );
-	if( clickItem->isClick( event->pos( ) ) ) {
+	if( clickItem->isClick( point ) ) {
 		if( clickItem == play )
-			PlayerControlWidget::player( "" );
+			PlayerControlWidget::currentMusicItemPlayer( );
 		else if( clickItem == thePreviousSong ) {
+			PlayerControlWidget::currentMusicItemPreviousSong( );
 		} else if( clickItem == theNextSong ) {
+			PlayerControlWidget::currentMusicItemNextSong( );
 		} else if( clickItem == thePreviousStep ) {
+			PlayerControlWidget::currentMusicItemPreviousStep( );
 		} else if( clickItem == theNextStep ) {
+			PlayerControlWidget::currentMusicItemNextStep( );
 		} else if( clickItem == pause ) {
-			PlayerControlWidget::stop( );
+			PlayerControlWidget::currentMusicItemPause( );
 		} else if( clickItem == termination ) {
-			PlayerControlWidget::terminate( );
+			PlayerControlWidget::currentMusicItemTerminate( );
 		} else if( clickItem == playerProgressItem ) {
+			using ProgressItemDouble = std::remove_pointer_t< std::remove_reference_t< decltype(playerProgressItem) > >::ProgressItemDouble;
+			ProgressItemDouble var;
+			if( playerProgressItem->calculateXPosVar( var, x ) ) {
+				playerProgressItem->setCurrentVar( var );
+				PlayerControlWidget::currentMusicItemSetPlayerTime( var );
+				isUpdate = true;
+			}
 		}
 	}
 	clickItem = nullptr;
 	userMutex->unlock( );
+	if( isUpdate )
+		update( );
 }
 
 void PlayerControlWidget::resizeEvent( QResizeEvent *event ) {

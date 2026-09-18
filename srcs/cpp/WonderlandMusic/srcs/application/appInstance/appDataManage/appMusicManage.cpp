@@ -54,7 +54,7 @@ bool AppMusicManage::init( ) {
 }
 
 bool AppMusicManage::initBefore( ) {
- deleteResource(  );
+	deleteResource( );
 	userMutex = new UserMutex;
 	return true;
 }
@@ -174,6 +174,36 @@ void AppMusicManage::clearMusicFavoriteItem( ) {
 		delete buff[ index ];
 	delete[] buff;
 }
+MusicFileInfoEx * AppMusicManage::getCurrentPlaterMusicFileInfoEx( ) const {
+	return currentPlayerMusicItem;
+}
+MusicFileInfoEx * AppMusicManage::playerMusic( const QString &player_music_file_path ) {
+	return currentPlayerMusicItem;
+}
+MusicFileInfoEx * AppMusicManage::currentMusicItemPlayer( ) {
+	return currentPlayerMusicItem;
+}
+MusicFileInfoEx * AppMusicManage::currentMusicItemPreviousSong( ) {
+	return currentPlayerMusicItem;
+}
+MusicFileInfoEx * AppMusicManage::currentMusicItemNextSong( ) {
+	return currentPlayerMusicItem;
+}
+MusicFileInfoEx * AppMusicManage::currentMusicItemPreviousStep( ) {
+	return currentPlayerMusicItem;
+}
+MusicFileInfoEx * AppMusicManage::currentMusicItemNextStep( ) {
+	return currentPlayerMusicItem;
+}
+MusicFileInfoEx * AppMusicManage::currentMusicItemPause( ) {
+	return currentPlayerMusicItem;
+}
+MusicFileInfoEx * AppMusicManage::currentMusicItemTerminate( ) {
+	return currentPlayerMusicItem;
+}
+MusicFileInfoEx * AppMusicManage::currentMusicItemSetPlayerTime( const long double percentage ) {
+	return currentPlayerMusicItem;
+}
 bool AppMusicManage::unsafeGetMusicFavoriteItem( IMusicFavoriteItem *&result_default_music_favorite_item ) const {
 	result_default_music_favorite_item = defaultFavoriteItem;
 	return true;
@@ -201,7 +231,7 @@ AppMusicManage::AppMusicManage( ) : ClassTypeInfoVar( ) {
 	regClassTypeInfoRef( this );
 }
 AppMusicManage::~AppMusicManage( ) {
- deleteResource(  );
+	deleteResource( );
 }
 
 bool AppMusicManage::setMusicCentreWidget( IMusicCentreWidget *music_centre_widget ) {

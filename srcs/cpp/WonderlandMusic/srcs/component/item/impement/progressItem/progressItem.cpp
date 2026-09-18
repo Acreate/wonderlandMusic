@@ -18,15 +18,15 @@ ProgressItem::~ProgressItem( ) {
 }
 bool ProgressItem::calculateXPosVar( ProgressItemDouble &result_var, const int &x_pos ) const {
 	auto &&geometry = ICoord::getGeometry( );
-	auto porgressRight = geometry.right( );
-	if( porgressRight > x_pos ) // 溢出右侧
+	auto porgressLeft = geometry.x( );
+	if( porgressLeft > x_pos ) // 溢出左侧
 		return false;
-	auto porgressLeft = geometry.left( );
-	if( porgressRight < x_pos ) // 溢出左侧
+	result_var = geometry.width( );
+	auto porgressRight = porgressLeft + result_var;
+	if( porgressRight < x_pos ) // 溢出右侧
 		return false;
-	result_var = porgressRight - porgressLeft;
 	ProgressItemDouble offsetX = x_pos - porgressLeft;
-	result_var = result_var / offsetX;
+	result_var = offsetX / result_var;
 	return true;
 }
 bool ProgressItem::calculateVarXPos( int &result_x_pos, const ProgressItemDouble &new_var ) const {

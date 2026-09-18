@@ -8,6 +8,7 @@
 #include <interface/iAppResourceCore.h>
 
 #include "../../../classTypeInfo/classTypeInfoVar.h"
+class MusicFileInfoEx;
 class MusicFavoriteItem;
 class MusicItemWidthInfo;
 class IMusicFavoriteItem;
@@ -28,6 +29,7 @@ protected:
 	MusicFavoriteItem *currenstFavoriteItem = nullptr;
 	IMusicCentreWidget *musicCentreWidget = nullptr;
 	std::vector< QString > supperDecodeFileSuffix;
+	MusicFileInfoEx *currentPlayerMusicItem = nullptr;
 
 protected:
 	bool deleteResource( );
@@ -52,6 +54,17 @@ public:
 	virtual bool musicFileNameSupperDecoder( const QString &file_name ) const;
 	virtual const std::vector< QString > & getSupperDecodeFileSuffix( ) const;
 	virtual void clearMusicFavoriteItem( );
+	virtual MusicFileInfoEx * getCurrentPlaterMusicFileInfoEx( ) const;
+	virtual MusicFileInfoEx * playerMusic( const QString &player_music_file_path );
+
+	virtual MusicFileInfoEx * currentMusicItemPlayer( );
+	virtual MusicFileInfoEx * currentMusicItemPreviousSong( );
+	virtual MusicFileInfoEx * currentMusicItemNextSong( );
+	virtual MusicFileInfoEx * currentMusicItemPreviousStep( );
+	virtual MusicFileInfoEx * currentMusicItemNextStep( );
+	virtual MusicFileInfoEx * currentMusicItemPause( );
+	virtual MusicFileInfoEx * currentMusicItemTerminate( );
+	virtual MusicFileInfoEx * currentMusicItemSetPlayerTime( const long double percentage );
 
 private:
 	virtual bool unsafeGetMusicFavoriteItem( IMusicFavoriteItem *&result_default_music_favorite_item ) const;

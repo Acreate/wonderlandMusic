@@ -36,10 +36,14 @@ public:
 	bool setPlayerWindowCentre( IPlayerWindowCentreWidget *play_window_centre_widget ) override;
 	IPlayerWindowCentreWidget * getPlayerWindowCentre( ) const override;
 	bool updateLayout( ) override;
-	bool player( const QString &music_file_path ) override;
-	bool stop( ) override;
-	bool terminate( ) override;
-	bool setPlayerTime( const int64_t &player_mill_second_time ) override;
+	bool currentMusicItemPlayer( ) override;
+	bool currentMusicItemPreviousSong( ) override;
+	bool currentMusicItemNextSong( ) override;
+	bool currentMusicItemPreviousStep( ) override;
+	bool currentMusicItemNextStep( ) override;
+	bool currentMusicItemPause( ) override;
+	bool currentMusicItemTerminate( ) override;
+	bool currentMusicItemSetPlayerTime( const long double &player_mill_second_time ) override;
 
 protected:
 	bool deleteResource( );

@@ -8,10 +8,14 @@ class QString;
 
 class IPlayerControlWidget : public IPlayerWindowCentreChildWidget {
 public:
-	virtual bool player( const QString &music_file_path ) = 0;
-	virtual bool stop( ) = 0;
-	virtual bool terminate( ) = 0;
-	virtual bool setPlayerTime( const int64_t &player_mill_second_time ) = 0;
+	virtual bool currentMusicItemPlayer( ) = 0;
+	virtual bool currentMusicItemPreviousSong( ) = 0;
+	virtual bool currentMusicItemNextSong( ) = 0;
+	virtual bool currentMusicItemPreviousStep( ) = 0;
+	virtual bool currentMusicItemNextStep( ) = 0;
+	virtual bool currentMusicItemPause( ) = 0;
+	virtual bool currentMusicItemTerminate( ) = 0;
+	virtual bool currentMusicItemSetPlayerTime( const long double &player_mill_second_time ) = 0;
 
 protected:
 	IPlayerControlWidget( );
