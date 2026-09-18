@@ -20,6 +20,7 @@ private:
 	ButtonItem *theNextSong = nullptr;
 	ButtonItem *thePreviousStep = nullptr;
 	ButtonItem *theNextStep = nullptr;
+	ButtonItem *drawPlayStatusItem = nullptr;
 	ButtonItem *play = nullptr;
 	ButtonItem *pause = nullptr;
 	ButtonItem *termination = nullptr;
@@ -27,6 +28,7 @@ private:
 	TimeItem *playerTimeItem = nullptr;
 	IItemDraw *clickItem = nullptr;
 	UserMutex *userMutex = nullptr;
+	Status status = Status::Pause;
 	IPlayerWindowCentreWidget *playerWindowCentreWidget = nullptr;
 
 public:
@@ -46,6 +48,9 @@ public:
 	bool currentMusicItemSetPlayerTime( const long double &player_mill_second_time ) override;
 
 protected:
+	bool setPlayerControlWidgetStatus( const Status &status ) override;
+	Status getPlayerControlWidgetStatus( ) const override;
+
 	bool deleteResource( );
 	void paintEvent( QPaintEvent *event ) override;
 	void mouseDoubleClickEvent( QMouseEvent *event ) override;

@@ -70,6 +70,7 @@ bool PlayerControlWidget::updateLayout( ) {
 	move_to_pos( thePreviousStep, offsetX, offsetY, height, tr( "移动失败" ), tr( "缩放失败失败" ) )
 	offsetX += thePreviousStep->getGeometry( ).width( ) + itemSpace;
 	move_to_pos( play, offsetX, offsetY, height, tr( "移动失败" ), tr( "缩放失败失败" ) )
+	move_to_pos( pause, offsetX, offsetY, height, tr( "移动失败" ), tr( "缩放失败失败" ) )
 	offsetX += play->getGeometry( ).width( ) + itemSpace;
 	move_to_pos( theNextStep, offsetX, offsetY, height, tr( "移动失败" ), tr( "缩放失败失败" ) )
 	offsetX += theNextStep->getGeometry( ).width( ) + itemSpace;
@@ -150,11 +151,39 @@ bool PlayerControlWidget::currentMusicItemSetPlayerTime( const long double &play
 		return false;
 	return appMusicManage->currentMusicItemSetPlayerTime( player_mill_second_time ) != nullptr;
 }
+bool PlayerControlWidget::setPlayerControlWidgetStatus( const Status &status ) {
+	switch( status ) {
+		case Status::Player :
+			userMutex->lock( );
+			this->status = status;
+			if( drawPlayStatusItem )
+				drawPlayStatusItem->setShow( false );
+			drawPlayStatusItem = pause;
+			drawPlayStatusItem->setShow( true );
+			userMutex->unlock( );
+			repaint( );
+			break;
+		case Status::Pause :
+			userMutex->lock( );
+			this->status = status;
+			if( drawPlayStatusItem )
+				drawPlayStatusItem->setShow( false );
+			drawPlayStatusItem = play;
+			drawPlayStatusItem->setShow( true );
+			userMutex->unlock( );
+			repaint( );
+			break;
+	}
+	return true;
+}
+IPlayerControlWidget::Status PlayerControlWidget::getPlayerControlWidgetStatus( ) const {
+	return this->status;
+}
 bool PlayerControlWidget::deleteResource( ) {
 	if( userMutex == nullptr )
 		return true;
 	setPlayerWindowCentre( nullptr );
-
+	setPlayerControlWidgetStatus( Status::Pause );
 	userMutex->lock( );
 	clickItem = nullptr;
 	Delete_Resource_App_Core_Ptr( thePreviousSong );
@@ -177,7 +206,7 @@ void PlayerControlWidget::paintEvent( QPaintEvent *event ) {
 	userMutex->lock( );
 	thePreviousSong->drawToParintr( painter );
 	thePreviousStep->drawToParintr( painter );
-	play->drawToParintr( painter );
+	drawPlayStatusItem->drawToParintr( painter );
 	theNextStep->drawToParintr( painter );
 	theNextSong->drawToParintr( painter );
 	termination->drawToParintr( painter );
@@ -206,36 +235,49 @@ void PlayerControlWidget::mouseReleaseEvent( QMouseEvent *event ) {
 	auto point = event->pos( );
 	int x = point.x( );
 	bool isUpdate = false;
+	using ProgressItemDouble = std::remove_pointer_t< std::remove_reference_t< decltype(playerProgressItem) > >::ProgressItemDouble;
+	ProgressItemDouble var;
 	userMutex->lock( );
 	if( clickItem->isClick( point ) ) {
-		if( clickItem == play )
-			PlayerControlWidget::currentMusicItemPlayer( );
-		else if( clickItem == thePreviousSong ) {
+		if( clickItem == drawPlayStatusItem ) {
+			if( drawPlayStatusItem == play ) {
+				PlayerControlWidget::currentMusicItemPlayer( );
+				userMutex->unlock( );
+				PlayerControlWidget::setPlayerControlWidgetStatus( Status::Player );
+			} else if( drawPlayStatusItem == pause ) {
+				PlayerControlWidget::currentMusicItemPause( );
+				userMutex->unlock( );
+				PlayerControlWidget::setPlayerControlWidgetStatus( Status::Pause );
+			}
+		} else if( clickItem == thePreviousSong ) {
 			PlayerControlWidget::currentMusicItemPreviousSong( );
+			userMutex->unlock( );
 		} else if( clickItem == theNextSong ) {
 			PlayerControlWidget::currentMusicItemNextSong( );
+			userMutex->unlock( );
 		} else if( clickItem == thePreviousStep ) {
 			PlayerControlWidget::currentMusicItemPreviousStep( );
+			userMutex->unlock( );
 		} else if( clickItem == theNextStep ) {
 			PlayerControlWidget::currentMusicItemNextStep( );
-		} else if( clickItem == pause ) {
-			PlayerControlWidget::currentMusicItemPause( );
+			userMutex->unlock( );
 		} else if( clickItem == termination ) {
 			PlayerControlWidget::currentMusicItemTerminate( );
+			userMutex->unlock( );
 		} else if( clickItem == playerProgressItem ) {
-			using ProgressItemDouble = std::remove_pointer_t< std::remove_reference_t< decltype(playerProgressItem) > >::ProgressItemDouble;
-			ProgressItemDouble var;
 			if( playerProgressItem->calculateXPosVar( var, x ) ) {
 				playerProgressItem->setCurrentVar( var );
-				PlayerControlWidget::currentMusicItemSetPlayerTime( var );
 				isUpdate = true;
 			}
+			userMutex->unlock( );
 		}
-	}
+	} else
+		userMutex->unlock( );
 	clickItem = nullptr;
-	userMutex->unlock( );
-	if( isUpdate )
+	if( isUpdate ) {
+		PlayerControlWidget::currentMusicItemSetPlayerTime( var );
 		update( );
+	}
 }
 
 void PlayerControlWidget::resizeEvent( QResizeEvent *event ) {
@@ -255,6 +297,7 @@ bool PlayerControlWidget::initBefore( ) {
 	termination = new ButtonItem( ButtonItem::Type::Ico );
 	playerProgressItem = new ProgressItem;
 	playerTimeItem = new TimeItem;
+	setPlayerControlWidgetStatus( Status::Pause );
 	return true;
 }
 bool PlayerControlWidget::init( ) {
@@ -281,7 +324,7 @@ IItemDraw * PlayerControlWidget::getPos( const QPoint &pos ) const {
 		return result;
 	userMutex->lock( );
 	#define set_clik( _result , _check, pos ) \
-		if(_check->isClick( pos )) { \
+		if( _check != nullptr && _check->isClick( pos ) ) { \
 			_result = _check; \
 			break; \
 		}
@@ -290,8 +333,7 @@ IItemDraw * PlayerControlWidget::getPos( const QPoint &pos ) const {
 		set_clik( result, theNextSong, pos );
 		set_clik( result, thePreviousStep, pos );
 		set_clik( result, theNextStep, pos );
-		set_clik( result, play, pos );
-		set_clik( result, pause, pos );
+		set_clik( result, drawPlayStatusItem, pos );
 		set_clik( result, termination, pos );
 		set_clik( result, playerProgressItem, pos );
 	} while( false );

@@ -8,6 +8,12 @@ class QString;
 
 class IPlayerControlWidget : public IPlayerWindowCentreChildWidget {
 public:
+	enum class Status {
+		Player,
+		Pause
+	};
+
+public:
 	virtual bool currentMusicItemPlayer( ) = 0;
 	virtual bool currentMusicItemPreviousSong( ) = 0;
 	virtual bool currentMusicItemNextSong( ) = 0;
@@ -20,6 +26,8 @@ public:
 protected:
 	IPlayerControlWidget( );
 	~IPlayerControlWidget( ) override;
+	virtual bool setPlayerControlWidgetStatus( const Status &status ) = 0;
+	virtual Status getPlayerControlWidgetStatus( ) const =0;
 };
 
 #endif // IPLAYERCONTROLWIDGET_H_H_HEAD__FILE__
