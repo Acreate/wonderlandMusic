@@ -202,8 +202,11 @@ bool PlayerControlWidget::deleteResource( ) {
 void PlayerControlWidget::paintEvent( QPaintEvent *event ) {
 	if( userMutex == nullptr )
 		return;
+	if( userMutex->tryLock( ) == false ) {
+		update( );
+		return;
+	}
 	QPainter painter( this );
-	userMutex->lock( );
 	thePreviousSong->drawToParintr( painter );
 	thePreviousStep->drawToParintr( painter );
 	drawPlayStatusItem->drawToParintr( painter );
