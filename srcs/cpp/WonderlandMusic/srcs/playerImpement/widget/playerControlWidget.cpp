@@ -74,7 +74,9 @@ bool PlayerControlWidget::updateLayout( ) {
 	move_to_pos( theNextStep, offsetX, offsetY, height, tr( "移动失败" ), tr( "缩放失败失败" ) )
 	offsetX += theNextStep->getGeometry( ).width( ) + itemSpace;
 	move_to_pos( theNextSong, offsetX, offsetY, height, tr( "移动失败" ), tr( "缩放失败失败" ) )
-	offsetX += theNextSong->getGeometry( ).width( ) + itemSpace * 4;
+	offsetX += theNextSong->getGeometry( ).width( ) + itemSpace;
+	move_to_pos( termination, offsetX, offsetY, height, tr( "移动失败" ), tr( "缩放失败失败" ) )
+	offsetX += termination->getGeometry( ).width( ) + itemSpace * 4;
 	// 进度条
 	int width = this->width( );
 	if( width > offsetX + itemSpace * 2 ) {
@@ -178,6 +180,7 @@ void PlayerControlWidget::paintEvent( QPaintEvent *event ) {
 	play->drawToParintr( painter );
 	theNextStep->drawToParintr( painter );
 	theNextSong->drawToParintr( painter );
+	termination->drawToParintr( painter );
 	playerProgressItem->drawToParintr( painter );
 	playerTimeItem->drawToParintr( painter );
 	userMutex->unlock( );
@@ -265,8 +268,8 @@ bool PlayerControlWidget::initAfter( ) {
 			return Result_Var_Function_Messag_Ptr_Out_Args( false, _button_Ptr, loadFileToDraw, msg );
 	load_button_png_resource( thePreviousSong, "/png/上一曲.png", tr( "资源加载失败" ) );
 	load_button_png_resource( theNextSong, "/png/下一曲.png", tr( "资源加载失败" ) );
-	load_button_png_resource( theNextStep, "/png/上一步.png", tr( "资源加载失败" ) );
-	load_button_png_resource( thePreviousStep, "/png/下一步.png", tr( "资源加载失败" ) );
+	load_button_png_resource( theNextStep, "/png/下一步.png", tr( "资源加载失败" ) );
+	load_button_png_resource( thePreviousStep, "/png/上一步.png", tr( "资源加载失败" ) );
 	load_button_png_resource( play, "/png/播放.png", tr( "资源加载失败" ) );
 	load_button_png_resource( pause, "/png/停止.png", tr( "资源加载失败" ) );
 	load_button_png_resource( termination, "/png/终止.png", tr( "资源加载失败" ) );
