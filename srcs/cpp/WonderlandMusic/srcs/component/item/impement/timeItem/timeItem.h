@@ -29,7 +29,6 @@ public:
 	bool loadStringToDraw( const QString &set_string_draw_to_buff ) override;
 	bool setDraw( const QImage &draw ) override;
 	virtual QString toString( ) const;
-	bool drawToParintr( QPainter &painter ) override;
 };
 
 #endif // TIMEITEM_H_H_HEAD__FILE__

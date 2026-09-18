@@ -89,9 +89,9 @@ if( ${QT_VERSION} VERSION_LESS 6.1.0 )
 endif( )
 
 if( "${CMAKE_BUILD_TYPE}" STREQUAL "Release" )
-	set( WIN32_EXECUTABLE_Status TRUE )
+	set( Release_Status TRUE )
 else( )
-	set( WIN32_EXECUTABLE_Status FALSE )
+	set( Release_Status FALSE )
 endif( )
 
 set_target_properties( "${prject_name}" PROPERTIES
@@ -99,7 +99,7 @@ set_target_properties( "${prject_name}" PROPERTIES
 	MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
 	MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
 	MACOSX_BUNDLE TRUE
-	WIN32_EXECUTABLE ${WIN32_EXECUTABLE_Status}
+	WIN32_EXECUTABLE ${Release_Status}
 )
 
 if( QT_VERSION_MAJOR EQUAL 6 )
@@ -113,20 +113,40 @@ qt_generate_deploy_cmake_script_inatll_job( scrpt_path_ "${prject_name}" )
 set( cmake_definitions_env_out "${CMAKE_CURRENT_LIST_DIR}/auto_generate_files/macro/" )
 configure_temp_files( ${cmake_definitions_env_out} "${prject_name}" )
 
-if( MINGW )
-	# # target_compile_options( "${prject_name}" PRIVATE "-rdynamic" )
+
+set( builder_option )
+set( builder_platform )
+
+if( CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang" AND NOT CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang" )
+	set( builder_platform 1 )
+elseif( MSVC )
+	set( builder_platform 2 )
+	# AppleClang单独区分（macOS）
+elseif( CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang" )
+	set( builder_platform 3 )
 endif( )
 
-if( MSVC )
-	set( builder_option )
-	if( NOT WIN32_EXECUTABLE_Status )
-		set( builder_option /utf-8 /MP /EHsc )
-	else( )
-		set( builder_option /utf-8 /MP )
+if( NOT Release_Status )
+	if( builder_platform EQUAL 1 )
+		set( builder_option -Werror -Wfatal-errors -finput-charset=UTF-8 )
+	elseif( builder_platform EQUAL 2 )
+		set( builder_option /utf-8 /MP /EHsc /WX )
+		un_show_include_info( ${prject_name} )
+		set_property( GLOBAL PROPERTY VS_GLOBAL_StopOnFirstBuildError "true" )
 	endif( )
-	target_compile_options( "${prject_name}" PRIVATE ${builder_option} )
-	un_show_include_info( ${prject_name} )
+	
+else( )
+	if( builder_platform EQUAL 1 )
+		set( builder_option -Werror -Wfatal-errors -finput-charset=UTF-8 )
+	elseif( builder_platform EQUAL 2 )
+		set( builder_option /utf-8 /MP /WX )
+		target_compile_options( "${prject_name}" PRIVATE ${builder_option} )
+		un_show_include_info( ${prject_name} )
+		set_property( GLOBAL PROPERTY VS_GLOBAL_StopOnFirstBuildError "true" )
+	endif( )
 endif( )
+
+target_compile_options( "${prject_name}" PRIVATE ${builder_option} )
 
 target_include_directories( "${prject_name}" PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/srcs" )
 link_ffmpeg_lib_to_target( "${prject_name}" )

@@ -12,7 +12,8 @@
 #include <tools/instanceTools.h>
 
 bool TimeItem::rePaintBuff( ) {
-	
+	if( IItemDraw::isShow( ) == false )
+		return false;
 	if( TimeItem::time == nullptr || TimeItem::font == nullptr )
 		return false;
 
@@ -82,7 +83,4 @@ bool TimeItem::setDraw( const QImage &draw ) {
 }
 QString TimeItem::toString( ) const {
 	return DateTimeFormat::millsecondToHourMinSecFrom( *TimeItem::time, true );
-}
-bool TimeItem::drawToParintr( QPainter &painter ) {
-	return IItemDraw::drawToParintr( painter );
 }

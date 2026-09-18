@@ -111,6 +111,3 @@ bool ButtonItem::setTxt( const QString &txt ) {
 bool ButtonItem::setDraw( const QImage &draw ) {
 	return ButtonItem::setIco( draw );
 }
-bool ButtonItem::drawToParintr( QPainter &painter ) {
-	return IItemDraw::drawToParintr( painter );
-}

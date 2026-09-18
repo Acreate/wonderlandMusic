@@ -77,16 +77,23 @@ bool PlayerControlWidget::updateLayout( ) {
 	offsetX += theNextSong->getGeometry( ).width( ) + itemSpace * 4;
 	// 进度条
 	int width = this->width( );
-	int modWidth;
-	auto heightHalf = height / 2;
-	playerTimeItem->setFontSize( heightHalf );
-	playerTimeItem->scaleToImageSize( );
-	modWidth = width - playerTimeItem->getGeometry( ).width( ) - itemSpace * 2;
-	playerTimeItem->moveTo( modWidth, offsetY );
-	modWidth = width - offsetX - itemSpace * 2;
-	height = height - heightHalf - itemSpace;
-	offsetY = offsetY + heightHalf + itemSpace;
-	playerProgressItem->setGeometry( offsetX, offsetY, modWidth, height );
+	if( width > offsetX + itemSpace * 2 ) {
+		playerTimeItem->setShow( true );
+		playerProgressItem->setShow( true );
+		int modWidth;
+		auto heightHalf = height / 2;
+		playerTimeItem->setFontSize( heightHalf );
+		playerTimeItem->scaleToImageSize( );
+		modWidth = width - playerTimeItem->getGeometry( ).width( ) - itemSpace * 2;
+		playerTimeItem->moveTo( modWidth, offsetY );
+		modWidth = width - offsetX - itemSpace * 2;
+		height = height - heightHalf - itemSpace;
+		offsetY = offsetY + heightHalf + itemSpace;
+		playerProgressItem->setGeometry( offsetX, offsetY, modWidth, height );
+	} else {
+		playerTimeItem->setShow( false );
+		playerProgressItem->setShow( false );
+	}
 	// 时间
 	userMutex->unlock( );
 	repaint( );

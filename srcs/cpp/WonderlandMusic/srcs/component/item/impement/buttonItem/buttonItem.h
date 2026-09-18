@@ -32,7 +32,5 @@ public:
 	virtual bool setIco( const QImage &ico );
 	virtual bool setTxt( const QString &txt );
 	bool setDraw( const QImage &draw ) override;
-	bool drawToParintr( QPainter &painter ) override;
 };
-
 #endif // BUTTONITEM_H_H_HEAD__FILE__
