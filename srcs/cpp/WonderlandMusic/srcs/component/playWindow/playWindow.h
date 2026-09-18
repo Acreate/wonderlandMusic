@@ -45,6 +45,15 @@ public:
 	virtual IPlayerControlWidget * getPlayerControlWidget( ) const;
 	virtual bool setPlayerControlWidget( IPlayerControlWidget *player_control_widget );
 	virtual bool updateLayout( );
+	
+	virtual bool currentMusicItemPlayer( );
+	virtual bool currentMusicItemPreviousSong( );
+	virtual bool currentMusicItemNextSong( );
+	virtual bool currentMusicItemPreviousStep( );
+	virtual bool currentMusicItemNextStep( );
+	virtual bool currentMusicItemPause( );
+	virtual bool currentMusicItemTerminate( );
+	virtual bool currentMusicItemSetPlayerTime( const long double percentage );
 };
 
 #endif // PLAYWINDOW_H_H_HEAD__FILE__

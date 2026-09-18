@@ -26,6 +26,14 @@ public:
 	bool updateLayout( ) override;
 	IPlayerInfoListWidget * getPlayerInfoListWidget( ) const override;
 	IPlayerControlWidget * getPlayerControlWidget( ) const override;
+	bool currentMusicItemPlayer( ) override;
+	bool currentMusicItemPreviousSong( ) override;
+	bool currentMusicItemNextSong( ) override;
+	bool currentMusicItemPreviousStep( ) override;
+	bool currentMusicItemNextStep( ) override;
+	bool currentMusicItemPause( ) override;
+	bool currentMusicItemTerminate( ) override;
+	bool currentMusicItemSetPlayerTime( const long double percentage ) override;
 
 protected:
 	bool deleteResource( );

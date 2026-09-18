@@ -89,6 +89,46 @@ IPlayerInfoListWidget * PlayerWindowCentreWidget::getPlayerInfoListWidget( ) con
 IPlayerControlWidget * PlayerWindowCentreWidget::getPlayerControlWidget( ) const {
 	return playerControlWidget;
 }
+bool PlayerWindowCentreWidget::currentMusicItemPlayer( ) {
+	if( playerControlWidget )
+		return false;
+	return playerControlWidget->currentMusicItemPlayer( );
+}
+bool PlayerWindowCentreWidget::currentMusicItemPreviousSong( ) {
+	if( playerControlWidget )
+		return false;
+	return playerControlWidget->currentMusicItemPreviousSong( );
+}
+bool PlayerWindowCentreWidget::currentMusicItemNextSong( ) {
+	if( playerControlWidget )
+		return false;
+	return playerControlWidget->currentMusicItemNextSong( );
+}
+bool PlayerWindowCentreWidget::currentMusicItemPreviousStep( ) {
+	if( playerControlWidget )
+		return false;
+	return playerControlWidget->currentMusicItemPreviousStep( );
+}
+bool PlayerWindowCentreWidget::currentMusicItemNextStep( ) {
+	if( playerControlWidget )
+		return false;
+	return playerControlWidget->currentMusicItemNextStep( );
+}
+bool PlayerWindowCentreWidget::currentMusicItemPause( ) {
+	if( playerControlWidget )
+		return false;
+	return playerControlWidget->currentMusicItemPause( );
+}
+bool PlayerWindowCentreWidget::currentMusicItemTerminate( ) {
+	if( playerControlWidget )
+		return false;
+	return playerControlWidget->currentMusicItemTerminate( );
+}
+bool PlayerWindowCentreWidget::currentMusicItemSetPlayerTime( const long double percentage ) {
+	if( playerControlWidget )
+		return false;
+	return playerControlWidget->currentMusicItemSetPlayerTime( percentage );
+}
 bool PlayerWindowCentreWidget::deleteResource( ) {
 	if( userMutex == nullptr )
 		return true;
