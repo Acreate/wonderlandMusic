@@ -74,12 +74,12 @@ bool PlayerControlWidget::updateLayout( ) {
 	move_to_pos( theNextStep, offsetX, offsetY, height, tr( "移动失败" ), tr( "缩放失败失败" ) )
 	offsetX += theNextStep->getGeometry( ).width( ) + itemSpace;
 	move_to_pos( theNextSong, offsetX, offsetY, height, tr( "移动失败" ), tr( "缩放失败失败" ) )
-	offsetX += theNextSong->getGeometry( ).width( ) + itemSpace;
+	offsetX += theNextSong->getGeometry( ).width( ) + itemSpace * 2;
 	move_to_pos( termination, offsetX, offsetY, height, tr( "移动失败" ), tr( "缩放失败失败" ) )
-	offsetX += termination->getGeometry( ).width( ) + itemSpace * 4;
+	offsetX += termination->getGeometry( ).width( ) + itemSpace * 6;
 	// 进度条
 	int width = this->width( );
-	if( width > offsetX + itemSpace * 2 ) {
+	if( width > offsetX ) {
 		playerTimeItem->setShow( true );
 		playerProgressItem->setShow( true );
 		int modWidth;
