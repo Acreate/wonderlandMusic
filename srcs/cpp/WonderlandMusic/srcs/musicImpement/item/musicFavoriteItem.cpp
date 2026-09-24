@@ -18,10 +18,13 @@
 
 #include "../../component/musicWindow/interface/widget/iMusicListWidget.h"
 
+#include "../../head/result_message_out.h"
+
 #include "../../musicFileInfo/musicFileInfo.h"
 #include "../../musicFileInfo/musicFileInfoList.h"
 
 #include "../../tools/classTypeTools.h"
+#include "../../tools/enumTools.h"
 #include "../../tools/instanceTools.h"
 #include "../../tools/invokeMethodTools.h"
 #include "../../tools/pathTools.h"
@@ -192,8 +195,11 @@ bool MusicFavoriteItem::loadMusicFile( const QString &music_file_path ) {
 	return true;
 }
 void MusicFavoriteItem::loadOverMusicFileList( MusicFileInfoList *music_file_info_list ) {
-	if( music_file_info_list->getStatus( ) == MusicFileInfoList::Status::Finish ) {
+	auto status = music_file_info_list->getStatus( );
+	auto chars = EnumTools::toString( status );
+	if( status != MusicFileInfoList::Status::Finish ) {
 		InvokeMethodTools::invokeQueuedConnectionMethod( [this, music_file_info_list] ( ApplicationManage *applicationManage ) {
+			Result_Void_Function_Messag_Ptr_Out_Args( music_file_info_list, getStatus, tr( "读取异常" ) );
 			delete music_file_info_list;
 		} );
 		return;

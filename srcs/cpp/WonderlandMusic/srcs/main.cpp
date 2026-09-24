@@ -18,7 +18,6 @@ int main( int argc, char *argv[ ], char *envp[ ] ) {
 			Result_Var_Function_Messag_Ptr_Out_Args( initMain->getExecCode( ), initMain, initAfter, QObject::tr( "准备工作环境异常" ) );
 			break;
 		}
-
 		runMainCode = initMain->runMain( );
 	} while( false );
 

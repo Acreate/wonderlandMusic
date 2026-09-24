@@ -15,7 +15,7 @@ MusicFavoriteWidget::MusicFavoriteWidget( ) {
 	regClassTypeInfoRef( this );
 }
 MusicFavoriteWidget::~MusicFavoriteWidget( ) {
-	deleteResource(  );
+	deleteResource( );
 }
 bool MusicFavoriteWidget::getJsonData( QJsonObject &get_json_object ) const {
 	return true;
@@ -71,7 +71,7 @@ void MusicFavoriteWidget::mouseReleaseEvent( QMouseEvent *event ) {
 }
 
 bool MusicFavoriteWidget::initBefore( ) {
-	deleteResource(  );
+	deleteResource( );
 	setMouseTracking( true );
 	return true;
 }

@@ -128,7 +128,7 @@ endif( )
 
 if( NOT Release_Status )
 	if( builder_platform EQUAL 1 )
-		set( builder_option -Werror -Wfatal-errors -finput-charset=UTF-8 )
+		set( builder_option -Werror -Wfatal-errors -finput-charset=UTF-8 -g )
 	elseif( builder_platform EQUAL 2 )
 		set( builder_option /utf-8 /MP /EHsc /WX )
 		un_show_include_info( ${prject_name} )

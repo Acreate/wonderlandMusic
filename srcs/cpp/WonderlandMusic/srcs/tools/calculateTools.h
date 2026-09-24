@@ -28,15 +28,54 @@ namespace CalculateTools {
 			result_var -= right;
 		return true;
 	}
-
-	template< typename Var_Type >
-	bool equ( bool &result_var, const Var_Type &left, const Var_Type &right ) {
+	inline bool isZero( const char *ptr, const size_t &ptr_count ) {
+		size_t index = 0;
+		char zero = 0;
+		for( ; index < ptr_count; index += 1 )
+			if( ptr[ index ] != zero )
+				return false;
+		return true;
+	}
+	template< typename T_Left_Type, typename R_Left_Type >
+	bool equ( bool &result_var, const T_Left_Type &left, const R_Left_Type &right ) {
 		result_var = false;
-		auto typeSize = sizeof( Var_Type );
-		decltype(typeSize) index = 0;
+		auto leftTypeSize = sizeof( T_Left_Type );
+		auto rightTypeSize = sizeof( R_Left_Type );
+		if( leftTypeSize != rightTypeSize ) {
+			if( leftTypeSize > rightTypeSize ) {
+				auto leftPtr = ( const char * ) &left;
+				auto rightPtr = ( const char * ) &right;
+				decltype(leftTypeSize) index = 0;
+				for( ; index < rightTypeSize; index += 1 )
+					if( leftPtr[ index ] != rightPtr[ index ] )
+						return true;
+
+				auto lastCount = leftTypeSize - rightTypeSize;
+				if( isZero( leftPtr + index, lastCount ) == false )
+					return true;
+
+				result_var = true;
+				return true;
+			} else {
+				auto leftPtr = ( const char * ) &left;
+				auto rightPtr = ( const char * ) &right;
+				decltype(leftTypeSize) index = 0;
+				for( ; index < leftTypeSize; index += 1 )
+					if( leftPtr[ index ] != rightPtr[ index ] )
+						return true;
+
+				auto lastCount = rightTypeSize - leftTypeSize;
+				if( isZero( rightPtr + index, lastCount ) == false )
+					return true;
+
+				result_var = true;
+				return true;
+			}
+		}
+		decltype(leftTypeSize) index = 0;
 		auto leftPtr = ( const char * ) &left;
 		auto rightPtr = ( const char * ) &right;
-		for( ; index < typeSize; index += 1 )
+		for( ; index < leftTypeSize; index += 1 )
 			if( leftPtr[ index ] != rightPtr[ index ] )
 				return true;
 		result_var = true;

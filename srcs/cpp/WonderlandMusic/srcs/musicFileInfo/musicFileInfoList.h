@@ -18,6 +18,8 @@ public:
 		Error
 	};
 
+	Q_ENUM( Status );
+
 private:
 	std::vector< MusicFileInfo * > overLoadMusicVector;
 	std::vector< MusicFileInfo * > musicVector;
