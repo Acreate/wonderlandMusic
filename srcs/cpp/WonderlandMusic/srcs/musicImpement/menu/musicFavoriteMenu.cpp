@@ -20,7 +20,7 @@
 MusicFavoriteMenu::MusicFavoriteMenu( ) {
 }
 MusicFavoriteMenu::~MusicFavoriteMenu( ) {
- deleteResource(  );
+	deleteResource( );
 }
 bool MusicFavoriteMenu::deleteResource( ) {
 	Delete_Resource_App_Core_Ptr( createFavoriteItemAction );
@@ -31,7 +31,7 @@ bool MusicFavoriteMenu::deleteResource( ) {
 	return true;
 }
 bool MusicFavoriteMenu::initBefore( ) {
- deleteResource(  );
+	deleteResource( );
 	createFavoriteItemAction = addAction( "" );
 	renameFavoriteItemAction = addAction( "" );
 	deleteFavoriteItemAction = addAction( "" );
@@ -140,7 +140,7 @@ void MusicFavoriteMenu::slot_deleteFavoriteItem( ) {
 }
 void MusicFavoriteMenu::slot_addMusicFile( ) {
 	if( musicFavoriteItem == nullptr )
-		Result_Void_Function_Messag_Ptr_Out_Args( this, addMusicDir, tr( "" ) );
+		Result_Void_Function_Messag_Ptr_Out_Args( this, slot_addMusicFile, tr( "不存在指定收藏夹" ) );
 	AppTranslateTools::getMusicFavoriteMenu( [this] ( MusicFavoriteMenuTranslate &translate ) {
 		std::vector< QString > resultFile;
 		auto musicCentreWidget = musicFavoriteWidget->getMusicCentreWidget( );
@@ -149,9 +149,9 @@ void MusicFavoriteMenu::slot_addMusicFile( ) {
 
 		QString filter;
 		if( PathTools::getSupperDecodeFileSuffixFilter( filter ) == false )
-			return false;
+			return Result_Var_Function_Messag_Ptr_Out_Args( false, nullptr, getSupperDecodeFileSuffixFilter, tr( "该软件不支持任意音频" ) );
 		if( WidgetTools::showMultipleSelectFileDialog( resultFile, openSelecteMultiFileWidgetPath, openWidget, translate.getSelectMusicFile( ), filter ) == false )
-			return false;
+			return Result_Var_Function_Messag_Ptr_Out_Args( false, nullptr, showMultipleSelectFileDialog, tr( "选择文件失败" ) );
 		QFileInfo info( resultFile[ 0 ] );
 		auto dir = info.dir( );
 		openSelecteMultiFileWidgetPath = dir.path( );
@@ -162,18 +162,18 @@ void MusicFavoriteMenu::slot_addMusicFile( ) {
 }
 void MusicFavoriteMenu::slot_addMusicDir( ) {
 	if( musicFavoriteItem == nullptr )
-		Result_Void_Function_Messag_Ptr_Out_Args( this, addMusicDir, tr( "" ) );
+		Result_Void_Function_Messag_Ptr_Out_Args( this, slot_addMusicDir, tr( "不存在指定收藏夹" ) );
 	AppTranslateTools::getMusicFavoriteMenu( [this] ( MusicFavoriteMenuTranslate &translate ) {
 		std::vector< QString > resultFile;
 		auto musicCentreWidget = musicFavoriteWidget->getMusicCentreWidget( );
 		QWidget *openWidget = musicCentreWidget->getMusicWindow( );
 		if( WidgetTools::showMultipleSelectDirDialog( resultFile, openSelecteMultiDirWidgetPath, openWidget, translate.getSelectMusicFile( ) ) == false )
-			return false;
+			return Result_Var_Function_Messag_Ptr_Out_Args( false, nullptr, showMultipleSelectDirDialog, tr( "选择目录失败" ) );
 		QFileInfo info( resultFile[ 0 ] );
 		auto dir = info.dir( );
 		openSelecteMultiDirWidgetPath = dir.path( );
 		if( musicFavoriteItem->loadMusicDirPath( resultFile ) == false )
-			return Result_Var_Function_Messag_Ptr_Out_Args( false, musicFavoriteItem, loadMusicFile, tr( "加载目录失败" ) );
+			return Result_Var_Function_Messag_Ptr_Out_Args( false, musicFavoriteItem, loadMusicDirPath, tr( "加载目录失败" ) );
 		return true;
 	} );
 }
