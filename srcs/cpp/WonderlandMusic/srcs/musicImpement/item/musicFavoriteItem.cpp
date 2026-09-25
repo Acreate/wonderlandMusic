@@ -28,6 +28,7 @@
 #include "../../tools/instanceTools.h"
 #include "../../tools/invokeMethodTools.h"
 #include "../../tools/pathTools.h"
+#include "../../tools/sourceLocationTools.h"
 
 bool MusicFavoriteItem::setMusicCentreWidget( IMusicCentreWidget *music_centre_widget ) {
 	musicFavoriteItemUserMutex->lock( );
@@ -53,6 +54,10 @@ MusicInfoItem * MusicFavoriteItem::load( MusicFileInfo *music_info ) {
 std::vector< MusicInfoItem * > MusicFavoriteItem::load( const std::vector< MusicFileInfo * > &music_infos ) {
 	musicFavoriteItemUserMutex->lock( );
 	size_t count = music_infos.size( );
+	if( count == 0 ) {
+		musicFavoriteItemUserMutex->unlock( );
+		return { };
+	}
 	std::vector< MusicInfoItem * > result( count );
 	size_t createCount = 0;
 	auto data = music_infos.data( );
@@ -63,8 +68,10 @@ std::vector< MusicInfoItem * > MusicFavoriteItem::load( const std::vector< Music
 			resultData[ createCount ] = new MusicInfoItem( this, *data[ index ] );
 			createCount += 1;
 		}
-	if( createCount == 0 )
+	if( createCount == 0 ) {
+		musicFavoriteItemUserMutex->unlock( );
 		return { };
+	}
 	result.resize( createCount );
 	musicItemVector.append_range( result );
 	musicFavoriteItemUserMutex->unlock( );

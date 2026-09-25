@@ -96,7 +96,7 @@ bool MusicFavoriteWidget::updateFavoriteItemLayout( ) {
 	auto musicDataManage = musicCentreWidget->getMusicDataManage( );
 	if( musicDataManage == nullptr )
 		return false;
-	peelMusicFavoriteItem( );
+	//peelMusicFavoriteItem( );
 	if( musicDataManage->getMusicFavoriteItem( defaultItem, musicFavoriteItems ) == false )
 		return false;
 	int offsetX = 0, offsetY = 0;

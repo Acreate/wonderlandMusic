@@ -463,6 +463,7 @@ bool MusicCentreWidget::removeMusicFavoriteWidget( IMusicFavoriteWidget *const m
 	return true;
 }
 bool MusicCentreWidget::removeMusicListWidget( IMusicListWidget *const music_list_widget ) {
+	// todo : 删除 music_list_widget 所挂靠的音频节点组件
 	if( music_list_widget == nullptr )
 		return false;
 	if( musicListWidget == nullptr )
