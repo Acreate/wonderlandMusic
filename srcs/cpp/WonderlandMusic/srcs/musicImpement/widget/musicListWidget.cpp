@@ -19,7 +19,7 @@ MusicListWidget::MusicListWidget( ) {
 	regClassTypeInfoRef( this );
 }
 MusicListWidget::~MusicListWidget( ) {
-	deleteResource(  );
+	deleteResource( );
 }
 bool MusicListWidget::getJsonData( QJsonObject &get_json_object ) const {
 	return true;
@@ -37,8 +37,11 @@ bool MusicListWidget::deleteResource( ) {
 	userMutex->lock( );
 	caculateHeight = 0;
 	auto musicCentreWidget = getMusicCentreWidget( );
-	if( musicCentreWidget )
+	if( musicCentreWidget ) {
+		userMutex->unlock( );
 		musicCentreWidget->removeMusicListWidget( this );
+		userMutex->lock( );
+	}
 	userMutex->unlock( );
 	return true;
 }
@@ -63,8 +66,8 @@ bool MusicListWidget::unsafeUpdateCurrentMusicFavoriteItem( ) {
 	if( musicItemWidthInfo == nullptr )
 		return false;
 	std::vector< IMusicItem * > resultClone;
-	if( musicFavoriteItem->getMusicVector( resultClone ) == false )
-		return false;
+	if( musicFavoriteItem->getMusicVector( resultClone ) == 0 )
+		return true;
 	size_t count = resultClone.size( );
 	if( count == 0 )
 		return true;
@@ -124,7 +127,7 @@ bool MusicListWidget::updateCurrentMusicFavoriteItem( ) {
 }
 
 bool MusicListWidget::initBefore( ) {
-	deleteResource(  );
+	deleteResource( );
 	userMutex = new UserMutex;
 	setMouseTracking( true );
 	return true;
@@ -146,9 +149,26 @@ IMusicFavoriteItem * MusicListWidget::getCurrentMusicFavoriteItem( ) const {
 }
 bool MusicListWidget::setCurrentMusicFavoriteItem( IMusicFavoriteItem *music_favorite_item ) {
 	userMutex->lock( );
+	auto old = musicFavoriteItem;
 	musicFavoriteItem = music_favorite_item;
 	userMutex->unlock( );
-	return updateCurrentMusicFavoriteItem( );
+	if( old ) {
+		std::vector< IMusicItem * > result;
+		size_t musicItemCount = old->getMusicVector( result );
+		if( musicItemCount ) {
+			auto data = result.data( );
+			size_t index = 0;
+			for( ; index < musicItemCount; index += 1 )
+				if( data[ index ] ) {
+					auto musicItemWidget = data[ index ]->getMusicItemWidget( );
+					if( musicItemWidget == nullptr )
+						continue;
+					musicItemWidget->setMusicListWidget( nullptr );
+				}
+		}
+	}
+
+	return music_favorite_item == nullptr ? true : updateCurrentMusicFavoriteItem( );
 }
 bool MusicListWidget::fromYPosGetMusicItem( IMusicItem *&result_music_item, const size_t &y_pos ) const {
 	userMutex->lock( );

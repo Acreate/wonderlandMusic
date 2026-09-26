@@ -117,7 +117,7 @@ size_t MusicFavoriteItem::getMusicVector( std::vector< IMusicItem * > &result_cl
 			dest[ index ] = source[ index ];
 	}
 	musicFavoriteItemUserMutex->unlock( );
-	return true;
+	return result;
 }
 void MusicFavoriteItem::setName( const QString &name ) {
 	musicFavoriteItemUserMutex->lock( );

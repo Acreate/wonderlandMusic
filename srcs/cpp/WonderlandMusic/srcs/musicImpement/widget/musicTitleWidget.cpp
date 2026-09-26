@@ -43,8 +43,11 @@ bool MusicTitleWidget::deleteResource( ) {
 	resuntIndexVarPtr = nullptr;
 	orgX = resultIndex = 0;
 	auto musicCentreWidget = getMusicCentreWidget( );
-	if( musicCentreWidget )
+	if( musicCentreWidget ) {
+		userMutex->unlock( );
 		musicCentreWidget->removeMusicTitleWidget( this );
+		userMutex->lock( );
+	}
 	Delete_Resource_App_Core_Ptr( renderBuff );
 	userMutex->unlock( );
 	Delete_Resource_App_Core_Ptr( userMutex );

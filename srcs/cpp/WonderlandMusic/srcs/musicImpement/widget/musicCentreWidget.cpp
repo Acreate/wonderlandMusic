@@ -457,13 +457,15 @@ bool MusicCentreWidget::removeMusicFavoriteWidget( IMusicFavoriteWidget *const m
 	auto removeFavoriteWidget = music_favorite_widget->toWidget( );
 	if( thisFavoriteWidget != removeFavoriteWidget )
 		return false;
+	if( musicListWidget )
+		musicListWidget->setCurrentMusicFavoriteItem( nullptr );
+
 	if( musicFavoriteWidget->setMusicCentreWidget( nullptr ) == false )
 		return Result_Var_Function_Messag_Ptr_Out_Args( false, musicFavoriteWidget, setMusicCentreWidget, tr( "配置 nullptr 组件失败" ) );
 	musicFavoriteWidget = nullptr;
 	return true;
 }
 bool MusicCentreWidget::removeMusicListWidget( IMusicListWidget *const music_list_widget ) {
-	// todo : 删除 music_list_widget 所挂靠的音频节点组件
 	if( music_list_widget == nullptr )
 		return false;
 	if( musicListWidget == nullptr )
@@ -474,6 +476,8 @@ bool MusicCentreWidget::removeMusicListWidget( IMusicListWidget *const music_lis
 		return false;
 	if( musicListWidget->setMusicCentreWidget( nullptr ) == false )
 		return Result_Var_Function_Messag_Ptr_Out_Args( false, musicListWidget, setMusicCentreWidget, tr( "配置 nullptr 组件失败" ) );
+	if( musicListWidget->setCurrentMusicFavoriteItem( nullptr ) == false )
+		return Result_Var_Function_Messag_Ptr_Out_Args( false, musicListWidget, setCurrentMusicFavoriteItem, tr( "配置 nullptr 组件失败" ) );
 	musicListWidget = nullptr;
 	return true;
 }
